@@ -18,7 +18,7 @@ namespace UnityTerminal
         // public KeyBindings<T> keyPress = new KeyBindings<T>();
 
         public List<TScreen> _screens = new List<TScreen>();
-        public RenderableTerminal _terminal;
+        public RenderTerminal _terminal;
         bool _dirty = true;
 
 
@@ -55,12 +55,12 @@ namespace UnityTerminal
             }
         }
 
-        public UserInterface(RenderableTerminal _terminal = null)
+        public UserInterface(RenderTerminal _terminal = null)
         {
             this._terminal = _terminal;
         }
 
-        public void setTerminal(RenderableTerminal terminal)
+        public void setTerminal(RenderTerminal terminal)
         {
             var resized = terminal != null &&
                 (_terminal == null ||

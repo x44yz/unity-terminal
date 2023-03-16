@@ -52,8 +52,6 @@ namespace UnityTerminal
 
     public class Glyph
     {
-        /// The empty glyph: a clear glyph using the default background color
-        /// [Color.BLACK].
         public static Glyph clear = new Glyph(CharCode.space);
 
         public int _char;

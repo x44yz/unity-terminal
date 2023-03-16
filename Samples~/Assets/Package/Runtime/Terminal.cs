@@ -62,14 +62,5 @@ namespace UnityTerminal
 
         public abstract void drawGlyph(int x, int y, Glyph glyph);
     }
-
-    public abstract class RenderableTerminal : Terminal
-    {
-        public abstract void render();
-
-        /// Given a point in pixel coordinates, returns the coordinates of the
-        /// character that contains that pixel.
-        public abstract Vector2Int pixelToChar(Vector2Int pixel);
-    }
 }
 
