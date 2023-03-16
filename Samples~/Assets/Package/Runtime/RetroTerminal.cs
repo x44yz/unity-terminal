@@ -247,54 +247,65 @@ namespace UnityTerminal
             this.terminalCanvas.Init(this);
         }
 
-        public override void drawGlyph(int x, int y, Glyph glyph)
+        public override void drawGlyph(int x, int y, char chr, Color? fore = null, Color? back = null)
         {
-            _display.setGlyph(x, y, glyph);
+            if (code2SpriteIdx.ContainsKey(chr))
+            {
+                var sprIdx = code2SpriteIdx[chr];
+
+                // _display.setGlyph(x, y, glyph);
+                this.terminalCanvas.Set(x, y, sprites[sprIdx]);
+            }
         }
 
         public override void render()
         {
-            // if (!_imageLoaded) return;
+            // todo
+        }
 
-            // if (sprs == null)
-            //     sprs = new Array2D<SpriteRenderer>(width, height, null);
+        // public override void render()
+        // {
+        //     // if (!_imageLoaded) return;
 
-            _display.render((x, y, glyph) =>
-            {
-                var _char = glyph._char;
+        //     // if (sprs == null)
+        //     //     sprs = new Array2D<SpriteRenderer>(width, height, null);
 
-                // Remap it if it's a Unicode character.
-                if (code2SpriteIdx.ContainsKey(_char))
-                    _char = code2SpriteIdx[_char];
+        //     _display.render((x, y, glyph) =>
+        //     {
+        //         var _char = glyph._char;
 
-                var sx = (_char % 32) * _charWidth;
-                var sy = (_char / 32) * _charHeight;
+        //         // Remap it if it's a Unicode character.
+        //         if (code2SpriteIdx.ContainsKey(_char))
+        //             _char = code2SpriteIdx[_char];
 
-                // Fill the background.
-                // _context.fillStyle = glyph.back.cssColor;
-                // _context.fillRect(x * _charWidth * _scale, y * _charHeight * _scale,
-                //     _charWidth * _scale, _charHeight * _scale);
+        //         var sx = (_char % 32) * _charWidth;
+        //         var sy = (_char / 32) * _charHeight;
 
-                // Don't bother drawing empty characters.
-                if (_char == 0 || _char == CharCode.space) return;
+        //         // Fill the background.
+        //         // _context.fillStyle = glyph.back.cssColor;
+        //         // _context.fillRect(x * _charWidth * _scale, y * _charHeight * _scale,
+        //         //     _charWidth * _scale, _charHeight * _scale);
 
-                terminalCanvas.Set(x, y, sprites[_char]);
+        //         // Don't bother drawing empty characters.
+        //         if (_char == 0 || _char == CharCode.space) return;
+
+        //         terminalCanvas.Set(x, y, sprites[_char]);
               
 
-                // var color = _getColorFont(glyph.fore);
-                // _context.imageSmoothingEnabled = false;
-                // _context.drawImageScaledFromSource(
-                //     color,
-                //     sx,
-                //     sy,
-                //     _charWidth,
-                //     _charHeight,
-                //     x * _charWidth * _scale,
-                //     y * _charHeight * _scale,
-                //     _charWidth * _scale,
-                //     _charHeight * _scale);
+        //         // var color = _getColorFont(glyph.fore);
+        //         // _context.imageSmoothingEnabled = false;
+        //         // _context.drawImageScaledFromSource(
+        //         //     color,
+        //         //     sx,
+        //         //     sy,
+        //         //     _charWidth,
+        //         //     _charHeight,
+        //         //     x * _charWidth * _scale,
+        //         //     y * _charHeight * _scale,
+        //         //     _charWidth * _scale,
+        //         //     _charHeight * _scale);
 
-            });
-        }
+        //     });
+        // }
     }
 }

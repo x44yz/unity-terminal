@@ -154,7 +154,7 @@ class Ball {
   }
 
   public void render(Terminal terminal) {
-    terminal.drawChar(24 + (int)x, 13 + (int)y, charCode, color);
+    terminal.drawGlyph(24 + (int)x, 13 + (int)y, (char)charCode, color);
   }
 }
 

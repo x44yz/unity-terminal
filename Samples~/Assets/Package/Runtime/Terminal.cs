@@ -43,7 +43,7 @@ namespace UnityTerminal
             for (var i = 0; i < text.Length; i++)
             {
                 if (x + i >= width) break;
-                drawGlyph(x + i, y, new Glyph(text[i], fore, back));
+                drawGlyph(x + i, y, text[i], fore, back);
             }
         }
 
@@ -55,12 +55,12 @@ namespace UnityTerminal
 
         /// Writes a one-character string consisting of [charCode] at column [x],
         /// row [y] using [fore] as the text color and [back] as the background color.
-        public void drawChar(int x, int y, int charCode, Color? fore = null, Color? back = null)
-        {
-            drawGlyph(x, y, new Glyph(charCode, fore, back));
-        }
+        // public void drawChar(int x, int y, int charCode, Color? fore = null, Color? back = null)
+        // {
+        //     drawGlyph(x, y, new Glyph(charCode, fore, back));
+        // }
 
-        public abstract void drawGlyph(int x, int y, Glyph glyph);
+        public abstract void drawGlyph(int x, int y, char chr, Color? fore = null, Color? back = null);
     }
 }
 
