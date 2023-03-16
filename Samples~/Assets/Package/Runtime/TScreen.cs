@@ -6,17 +6,18 @@ namespace UnityTerminal
 {
     public class TScreen
     {
-        UserInterface _ui;
+        // UserInterface _ui;
 
         /// The [UserInterface] this screen is bound to.
         ///
         /// Throws an exception if the screen is not currently bound to an interface.
-        public UserInterface ui => _ui!;
+        // public UserInterface ui => _ui!;
+        public RenderTerminal terminal = null;
 
         /// Whether this screen is bound to a [UserInterface].
         ///
         /// If this is `false`, then [ui] cannot be accessed.
-        bool isBound => _ui != null;
+        bool isBound => terminal != null;
 
         /// Whether this screen allows any screens under it to be visible.
         ///
@@ -24,19 +25,19 @@ namespace UnityTerminal
         public bool isTransparent => false;
 
         /// Binds this screen to [ui].
-        public void _bind(UserInterface ui)
+        public void _bind(RenderTerminal tel)
         {
-            Debug.Assert(_ui == null);
-            _ui = ui;
+            Debug.Assert(terminal == null);
+            terminal = tel;
 
-            resize(ui._terminal!.size);
+            resize(terminal!.size);
         }
 
         /// Unbinds this screen from the [ui] that owns it.
         public void _unbind()
         {
-            Debug.Assert(_ui != null);
-            _ui = null;
+            Debug.Assert(terminal != null);
+            terminal = null;
         }
 
         /// Marks the user interface as needing to be rendered.
@@ -47,9 +48,9 @@ namespace UnityTerminal
         {
             // If we aren't bound (yet), just do nothing. The screen will be dirtied
             // when it gets bound.
-            if (_ui == null) return;
+            if (terminal == null) return;
 
-            _ui!.dirty();
+            terminal!.dirty();
         }
 
         /// Called when the screen above this one ([popped]) has been popped and this

@@ -31,13 +31,13 @@ class MainScreen : TScreen {
     }
   }
 
-  void profile() {
-    ui.running = true;
-    for (var i = 0; i < 1000; i++) {
-      update();
-      ui.refresh();
-    }
-  }
+  // void profile() {
+  //   ui.running = true;
+  //   for (var i = 0; i < 1000; i++) {
+  //     update();
+  //     ui.refresh();
+  //   }
+  // }
 
   public override void update() {
     foreach (var ball in balls) {
@@ -165,7 +165,9 @@ public class Test : MonoBehaviour
     public float offX = 0f;
     public float offY = 0f;
 
-    public UserInterface ui = new UserInterface();
+    // public UserInterface ui = new UserInterface();
+
+
 
     public float glyphScale = 1f;
     /// A few different terminals to choose from.
@@ -198,6 +200,7 @@ public class Test : MonoBehaviour
 
     public bool init = false;
     public TerminalCanvas terminalCanvas;
+    public RenderTerminal _terminal = null;
 
     void Init()
     {
@@ -211,21 +214,23 @@ public class Test : MonoBehaviour
         // ui.keyPress.bind("animate", Malison.KeyCode.space);
         // ui.keyPress.bind("profile", Malison.KeyCode.p);
 
-        updateTerminal();
+        // updateTerminal();
+        _terminal = (RenderTerminal)terminals(0);
 
-        ui.push(new MainScreen());
+        // ui.push(new MainScreen());
+        _terminal.push(new MainScreen());
 
         // ui.handlingInput = true;
-        ui.running = true;
+        // ui.running = true;
 
-        gscale = Screen.height * 1f / height / (ui._terminal as RetroTerminal)._charHeight;
+        gscale = Screen.height * 1f / height / (_terminal as RetroTerminal)._charHeight;
         Camera.main.orthographicSize = Screen.height / pixelToUnits / 2;
     }
 
-    void updateTerminal() {
-        // html.document.body!.children.clear();
-        ui.setTerminal((RenderTerminal)terminals(terminalIndex));
-    }
+    // void updateTerminal() {
+    //     // html.document.body!.children.clear();
+    //     ui.setTerminal((RenderTerminal)terminals(terminalIndex));
+    // }
 
     // Update is called once per frame
     void Update()
@@ -233,8 +238,8 @@ public class Test : MonoBehaviour
         if (!init)
             Init();
 
-        if (ui != null)
-            ui._tick(Time.deltaTime);
+        if (_terminal != null)
+            _terminal._tick(Time.deltaTime);
     }
 
     public float swidth;
@@ -248,7 +253,7 @@ public class Test : MonoBehaviour
       if (!showDisplay)
         return;
 
-      if (ui._terminal == null)
+      if (_terminal == null)
         return;
 
       if (terminalCanvas == null)
@@ -259,30 +264,30 @@ public class Test : MonoBehaviour
 
       // 600 / 1.2
       // float pixelToUnits = Camera.main.ScreenToWorldPoint
-      float charWidth = (ui._terminal as RetroTerminal)._charWidth;
-      float charHeight = (ui._terminal as RetroTerminal)._charHeight;
+      float charWidth = (_terminal as RetroTerminal)._charWidth;
+      float charHeight = (_terminal as RetroTerminal)._charHeight;
       // var scale = Mathf.Min(swidth / (ui._terminal.width * charWidth), sheight / (ui._terminal.height * charHeight));
 
       charWidth *= gscale;
       charHeight *= gscale;
 
-      var fx = offX - ui._terminal.width * charWidth * 0.5f;
-      var fy = ui._terminal.height * charHeight * 0.5f - offY;
+      var fx = offX - _terminal.width * charWidth * 0.5f;
+      var fy = _terminal.height * charHeight * 0.5f - offY;
       var off = new Vector3(fx / pixelToUnits, fy / pixelToUnits, 0f);
 
       Gizmos.color = displayColor;
 
-      for (int i = 0; i <= ui._terminal.width; ++i)
+      for (int i = 0; i <= _terminal.width; ++i)
       {
           Vector3 bpos = terminalCanvas.glyphsRoot.position + off + new Vector3(i * charWidth / pixelToUnits, 0 * charHeight/ pixelToUnits, gizmoPos);
-          Vector3 epos = terminalCanvas.glyphsRoot.position + off + new Vector3(i * charWidth/ pixelToUnits, -ui._terminal.height * charHeight/ pixelToUnits, gizmoPos);
+          Vector3 epos = terminalCanvas.glyphsRoot.position + off + new Vector3(i * charWidth/ pixelToUnits, -_terminal.height * charHeight/ pixelToUnits, gizmoPos);
           Gizmos.DrawLine(bpos, epos);
       }
 
-      for (int j = 0; j <= ui._terminal.height; ++j)
+      for (int j = 0; j <= _terminal.height; ++j)
       {
           Vector3 bpos = terminalCanvas.glyphsRoot.position + off + new Vector3(0 * charWidth/ pixelToUnits, -j * charHeight/ pixelToUnits, gizmoPos);
-          Vector3 epos = terminalCanvas.glyphsRoot.position + off + new Vector3(ui._terminal.width * charWidth/ pixelToUnits, -j * charHeight/ pixelToUnits, gizmoPos);
+          Vector3 epos = terminalCanvas.glyphsRoot.position + off + new Vector3(_terminal.width * charWidth/ pixelToUnits, -j * charHeight/ pixelToUnits, gizmoPos);
           Gizmos.DrawLine(bpos, epos);
       }
     }
