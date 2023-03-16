@@ -3,12 +3,12 @@ using System.Collections.Generic;
 
 namespace UnityTerminal
 {
-  public static class UnicodeMap
-  {
-    /// Maps Unicode codepoints to their codepage 432 index.
-    ///
-    /// Does not include codepoints whose codepage 432 index is the same.
-    public static Dictionary<int, int> unicodeMap = new Dictionary<int, int>{
+    public static class UnicodeMap
+    {
+        /// Maps Unicode codepoints to their codepage 432 index.
+        ///
+        /// Does not include codepoints whose codepage 432 index is the same.
+        public static Dictionary<int, int> unicodeMap = new Dictionary<int, int>{
       // 1 - 15.
       {CharCode.whiteSmilingFace, 1},
       {CharCode.blackSmilingFace, 2},
@@ -190,5 +190,5 @@ namespace UnityTerminal
       {CharCode.superscriptTwo, 253},
       {CharCode.blackSquare, 254},
     };
-  }
+    }
 }

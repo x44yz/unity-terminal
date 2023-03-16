@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityTerminal;
 
-class MainScreen : Screen<string> {
+class MainScreen : TScreen {
   public List<Ball> balls = new List<Ball>();
 
   public MainScreen() {
@@ -29,35 +29,6 @@ class MainScreen : Screen<string> {
             0.0f));
       }
     }
-  }
-
-  public override bool handleInput(string input) {
-    // switch (input) {
-    //   case "next terminal":
-    //     terminalIndex = (terminalIndex + 1) % terminals.length;
-    //     updateTerminal();
-    //     ui.refresh();
-    //     break;
-
-    //   case "prev terminal":
-    //     terminalIndex = (terminalIndex - 1) % terminals.length;
-    //     updateTerminal();
-    //     ui.refresh();
-    //     break;
-
-    //   case "animate":
-    //     ui.running = !ui.running;
-    //     break;
-
-    //   case "profile":
-    //     profile();
-    //     break;
-
-    //   default:
-    //     return false;
-    // }
-
-    return true;
   }
 
   void profile() {
@@ -187,14 +158,14 @@ class Ball {
   }
 }
 
-public class TestMalison : MonoBehaviour
+public class Test : MonoBehaviour
 {
     public int width = 80;
     public int height = 45;
     public float offX = 0f;
     public float offY = 0f;
 
-    public UserInterface<string> ui = new UserInterface<string>();
+    public UserInterface ui = new UserInterface();
 
     public float glyphScale = 1f;
     /// A few different terminals to choose from.
@@ -241,7 +212,7 @@ public class TestMalison : MonoBehaviour
 
         ui.push(new MainScreen());
 
-        ui.handlingInput = true;
+        // ui.handlingInput = true;
         ui.running = true;
 
         gscale = Screen.height * 1f / height / (ui._terminal as RetroTerminal)._charHeight;
