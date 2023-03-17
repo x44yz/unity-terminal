@@ -3,7 +3,7 @@ The first version is unity porting of [Malison](https://github.com/munificent/ma
 
 TODO:  
 [x]glyph color  
-[+]led effect  
+[x]led effect  
 [+]canvas fade in/out effect 
 
 

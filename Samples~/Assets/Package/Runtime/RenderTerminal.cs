@@ -34,8 +34,8 @@ namespace UnityTerminal
             }
         }
 
-        public abstract void render(System.Action<int, int, Glyph> renderGlyph);
-        public abstract void krender();
+        // public abstract void render(System.Action<int, int, Glyph> renderGlyph);
+        // public abstract void krender();
 
         /// Given a point in pixel coordinates, returns the coordinates of the
         /// character that contains that pixel.
@@ -119,7 +119,7 @@ namespace UnityTerminal
             // if (_running) html.window.requestAnimationFrame(_tick);
         }
 
-        void _render()
+        protected virtual void _render()
         {
             // // If the UI isn't currently bound to a terminal, there's nothing to render.
             clear();
@@ -139,10 +139,7 @@ namespace UnityTerminal
                 _screens[i].render(this);
             }
 
-            krender();
             _dirty = false;
         }
-
-
     }
 }

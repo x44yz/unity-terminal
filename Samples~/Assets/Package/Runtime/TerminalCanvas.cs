@@ -34,10 +34,9 @@ namespace UnityTerminal
             bg.transform.localScale = new Vector3(UnityEngine.Screen.width / pixelToUnits, UnityEngine.Screen.height / pixelToUnits, 1f);
         }
 
-        private void Update() 
-        {
- 
-        }
+        // private void Update() 
+        // {
+        // }
 
         public void Render()
         {
@@ -45,22 +44,30 @@ namespace UnityTerminal
                 return;
 
             (terminal as RetroTerminal).render((x, y, glyph) => {
-                Debug.Log($"xx-- render > {x}, {y}, {glyph._char}");
-
-                int sprIdx = glyph._char;
-                if (char2SpriteIndexs.ContainsKey(glyph._char))
+            
+                if (glyph == null)
                 {
-                    sprIdx = char2SpriteIndexs[glyph._char];
+                    this.Set(x, y, null, Color.white);
                 }
-
-                if (sprIdx < 0 || sprIdx >= sprites.Length)
+                else
                 {
-                    Debug.LogError("not support glyph > " + glyph._char);
-                    return;
-                }
+                    Debug.Log($"xx-- render > {x}, {y}, {glyph._char}");
 
-                // _display.setGlyph(x, y, glyph);
-                this.Set(x, y, sprites[sprIdx], glyph.fore);
+                    int sprIdx = glyph._char;
+                    if (char2SpriteIndexs.ContainsKey(glyph._char))
+                    {
+                        sprIdx = char2SpriteIndexs[glyph._char];
+                    }
+
+                    if (sprIdx < 0 || sprIdx >= sprites.Length)
+                    {
+                        Debug.LogError("not support glyph > " + glyph._char);
+                        return;
+                    }
+
+                    // _display.setGlyph(x, y, glyph);
+                    this.Set(x, y, sprites[sprIdx], glyph.fore);
+                }
             });
         }
 

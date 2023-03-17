@@ -207,7 +207,7 @@ namespace UnityTerminal
         public Array2D<Glyph> _glyphs;
 
         /// The glyphs that have been modified since the last call to [render].
-        public Array2D<Glyph> _changedGlyphs;
+        // public Array2D<Glyph> _changedGlyphs;
 
         public static RetroTerminal dos(int width, int height,
                 float scale, TerminalCanvas canvas) =>
@@ -246,7 +246,7 @@ namespace UnityTerminal
             this.terminalCanvas.Init(this, resName, code2SpriteIdx);
 
             _glyphs = new Array2D<Glyph>(width, height, Glyph.clear);
-            _changedGlyphs = new Array2D<Glyph>(width, height, Glyph.clear);
+            // _changedGlyphs = new Array2D<Glyph>(width, height, Glyph.clear);
         }
 
         public override void clearGlyph(int x, int y)
@@ -258,8 +258,8 @@ namespace UnityTerminal
 
             // _changedGlyphs.Get(x, y)._char = Glyph.clear._char;
             // _changedGlyphs.Get(x, y).dirty = true;
-            _glyphs.Set(x, y, null);
-            _changedGlyphs.Set(x, y, null);
+            _glyphs.Get(x, y)._char = Glyph.clear._char;
+            // _changedGlyphs.Set(x, y, null);
         }
 
         public override void drawGlyph(int x, int y, char chr, Color? fore = null, Color? back = null)
@@ -278,33 +278,36 @@ namespace UnityTerminal
             //     _changedGlyphs.Get(x, y)._char = Glyph.clear._char;
             //     _changedGlyphs.Get(x, y).dirty = true;
             // }
-            var glyph = new Glyph(chr, fore, back);
-            if (_glyphs.Get(x, y) != glyph)
+            // var glyph = new Glyph(chr, fore, back);
+            if (_glyphs.Get(x, y).isEqual(chr, fore.Value) == false)
             {
-                Debug.Log($"xx-- set 1 > {x}, {y} " + glyph._char);
-                _changedGlyphs.Set(x, y, glyph);
+                // Debug.Log($"xx-- set 1 > {x}, {y} " + glyph._char);
+                _glyphs.Get(x, y)._char = chr;
+                _glyphs.Get(x, y).fore = fore.Value;
             }
-            else
-            {
-                // if (x == 0 && y == 1) Debug.Log("xx-- set 2 > null ");
-                _changedGlyphs.Set(x, y, null);
-            }
+            // else
+            // {
+            //     // if (x == 0 && y == 1) Debug.Log("xx-- set 2 > null ");
+            //     _changedGlyphs.Set(x, y, null);
+            // }
         }
 
-        public override void krender()
+        protected override void _render()
         {
+            base._render();
+
             terminalCanvas.Render();
         }
 
-        public override void render(Action<int, int, Glyph> renderGlyph)
+        public void render(Action<int, int, Glyph> renderGlyph)
         {
             for (var y = 0; y < height; y++) {
                 for (var x = 0; x < width; x++) {
-                    var glyph = _changedGlyphs.Get(x, y);
+                    var glyph = _glyphs.Get(x, y);
                     
 
                     // Only draw glyphs that are different since the last call.
-                    if (glyph == null) continue;
+                    // if (glyph == null) continue;
                     // if (glyph.dirty == false) continue;
 
                     renderGlyph(x, y, glyph);
@@ -314,8 +317,8 @@ namespace UnityTerminal
                     // _glyphs.Get(x, y).fore = glyph.fore;
                     // _changedGlyphs.Get(x, y)._char = Glyph.clear._char;
                     // _changedGlyphs.Get(x, y).dirty = false;
-                    _glyphs.Set(x, y, glyph);
-                    _changedGlyphs.Set(x, y, null);
+                    // _glyphs.Set(x, y, glyph);
+                    // _changedGlyphs.Set(x, y, null);
                     // if (x == 0 && y == 1) Debug.Log("xx-- set 3 > null ");
                 }
             }
