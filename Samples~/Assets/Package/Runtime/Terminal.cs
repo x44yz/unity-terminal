@@ -24,11 +24,11 @@ namespace UnityTerminal
 
             // var glyph = new Glyph(CharCode.space, foreColor, color);
 
-            // for (var py = y; py < y + height; py++) {
-            //   for (var px = x; px < x + width; px++) {
-            //     drawGlyph(px, py, glyph);
-            //   }
-            // }
+            for (var py = y; py < y + height; py++) {
+              for (var px = x; px < x + width; px++) {
+                clearGlyph(px, py);
+              }
+            }
             // MalisonUnity.Inst.canvasBg.color = color.toUnityColor;
         }
 
@@ -61,6 +61,7 @@ namespace UnityTerminal
         // }
 
         public abstract void drawGlyph(int x, int y, char chr, Color? fore = null, Color? back = null);
+        public abstract void clearGlyph(int x, int y);
 
         // public abstract void tick(float dt);
     }

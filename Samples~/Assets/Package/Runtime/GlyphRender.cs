@@ -22,6 +22,11 @@ namespace UnityTerminal
         {
             spr.sprite = s;
         }
+
+        public void SetColor(Color color)
+        {
+            spr.color = color;
+        }
     }
 }
 

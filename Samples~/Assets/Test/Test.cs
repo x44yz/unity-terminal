@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityTerminal;
 
 class MainScreen : UnityTerminal.Screen {
-  public List<Ball> balls = new List<Ball>();
+  // public List<Ball> balls = new List<Ball>();
 
   public MainScreen() {
     var colors = new List<Color>{
@@ -18,17 +18,17 @@ class MainScreen : UnityTerminal.Screen {
       ColorX.purple
     };
 
-    foreach (var _char in "0123456789") {
-      foreach (var color in colors) {
-        balls.Add(new Ball(
-            color,
-            _char,
-            UnityEngine.Random.Range(0f, 1.0f) * Ball.pitWidth,
-            UnityEngine.Random.Range(0f, 1.0f) * (Ball.pitHeight / 2.0f),
-            UnityEngine.Random.Range(0f, 1.0f) + 0.2f,
-            0.0f));
-      }
-    }
+    // foreach (var _char in "0123456789") {
+    //   foreach (var color in colors) {
+    //     balls.Add(new Ball(
+    //         color,
+    //         _char,
+    //         UnityEngine.Random.Range(0f, 1.0f) * Ball.pitWidth,
+    //         UnityEngine.Random.Range(0f, 1.0f) * (Ball.pitHeight / 2.0f),
+    //         UnityEngine.Random.Range(0f, 1.0f) + 0.2f,
+    //         0.0f));
+    //   }
+    // }
   }
 
   // void profile() {
@@ -39,18 +39,29 @@ class MainScreen : UnityTerminal.Screen {
   //   }
   // }
 
-  public override void update() {
-    foreach (var ball in balls) {
-      ball.update();
+  public int x = 0;
+  public float tick = 0f;
+  public override void update(float dt) {
+    // foreach (var ball in balls) {
+    //   ball.update();
+    // }
+    tick += dt;
+    if (tick > 0.5f)
+    {
+      tick = 0f;
+      x = (x + 1)%terminal.width;
+      // Debug.Log("xx-- x > " + x);
     }
 
     dirty();
   }
-
   public override void render(Terminal terminal) {
-    terminal.writeAt(0, 0, "☺");
+    terminal.writeAt(x, 0, "P", ColorX.lightGold);
     terminal.writeAt(0, 1, "å");
-    terminal.writeAt(7, 4, "å");
+    // terminal.writeAt(7, 4, "å");
+    // terminal.writeAt(0, 0, "Predefined colors:");
+    // terminal.writeAt(59, 0, "switch terminal [tab]", ColorX.darkGray);
+    // terminal.writeAt(75, 0, "[tab]", ColorX.lightGray);
     return;
 
     // terminal.clear();
@@ -115,48 +126,48 @@ class MainScreen : UnityTerminal.Screen {
   }
 }
 
-class Ball {
-  public const float pitWidth = 56.0f;
-  public const float pitHeight = 17.0f;
+// class Ball {
+//   public const float pitWidth = 56.0f;
+//   public const float pitHeight = 17.0f;
 
-  public Color color;
-  public int charCode;
+//   public Color color;
+//   public int charCode;
 
-  float x, y, h, v;
+//   float x, y, h, v;
 
-  public Ball(Color color, int charCode, 
-        float x, float y, float h, float v)
-  {
-    this.color = color;
-    this.charCode = charCode;
-    this.x = x;
-    this.y = y;
-    this.h = h;
-    this.v = v;
-  }
+//   public Ball(Color color, int charCode, 
+//         float x, float y, float h, float v)
+//   {
+//     this.color = color;
+//     this.charCode = charCode;
+//     this.x = x;
+//     this.y = y;
+//     this.h = h;
+//     this.v = v;
+//   }
 
-  public void update() {
-    x += h;
-    if (x < 0.0) {
-      x = -x;
-      h = -h;
-    } else if (x > pitWidth) {
-      x = pitWidth - x + pitWidth;
-      h = -h;
-    }
+//   public void update() {
+//     x += h;
+//     if (x < 0.0) {
+//       x = -x;
+//       h = -h;
+//     } else if (x > pitWidth) {
+//       x = pitWidth - x + pitWidth;
+//       h = -h;
+//     }
 
-    v += 0.03f;
-    y += v;
-    if (y > pitHeight) {
-      y = pitHeight - y + pitHeight;
-      v = -v;
-    }
-  }
+//     v += 0.03f;
+//     y += v;
+//     if (y > pitHeight) {
+//       y = pitHeight - y + pitHeight;
+//       v = -v;
+//     }
+//   }
 
-  public void render(Terminal terminal) {
-    terminal.drawGlyph(24 + (int)x, 13 + (int)y, (char)charCode, color);
-  }
-}
+//   public void render(Terminal terminal) {
+//     terminal.drawGlyph(24 + (int)x, 13 + (int)y, (char)charCode, color);
+//   }
+// }
 
 public class Test : MonoBehaviour
 {
@@ -166,8 +177,6 @@ public class Test : MonoBehaviour
     public float offY = 0f;
 
     // public UserInterface ui = new UserInterface();
-
-
 
     public float glyphScale = 1f;
     /// A few different terminals to choose from.

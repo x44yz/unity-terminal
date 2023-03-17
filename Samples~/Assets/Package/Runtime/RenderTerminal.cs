@@ -34,7 +34,8 @@ namespace UnityTerminal
             }
         }
 
-        public abstract void render();
+        public abstract void render(System.Action<int, int, Glyph> renderGlyph);
+        public abstract void krender();
 
         /// Given a point in pixel coordinates, returns the coordinates of the
         /// character that contains that pixel.
@@ -86,17 +87,18 @@ namespace UnityTerminal
         //     _tick(dt);
         // }
 
-        public void refresh()
-        {
-            // Don't use a for-in loop here so that we don't run into concurrent
-            // modification exceptions if a screen is added or removed during a call to
-            // update().
-            for (var i = 0; i < _screens.Count; i++)
-            {
-                _screens[i].update();
-            }
-            if (_dirty) _render();
-        }
+        // public void refresh()
+        // {
+        //     // Don't use a for-in loop here so that we don't run into concurrent
+        //     // modification exceptions if a screen is added or removed during a call to
+        //     // update().
+        //     for (var i = 0; i < _screens.Count; i++)
+        //     {
+        //         _screens[i].update();
+        //     }
+        //     if (_dirty) 
+        //         _render();
+        // }
 
      /// Called every animation frame while the UI's game loop is running.
         public void _tick(float dt)
@@ -104,14 +106,22 @@ namespace UnityTerminal
             if (!_running)
                 return;
 
-            refresh();
+            // Don't use a for-in loop here so that we don't run into concurrent
+            // modification exceptions if a screen is added or removed during a call to
+            // update().
+            for (var i = 0; i < _screens.Count; i++)
+            {
+                _screens[i].update(dt);
+            }
+            if (_dirty) 
+                _render();
 
             // if (_running) html.window.requestAnimationFrame(_tick);
         }
 
         void _render()
         {
-            // If the UI isn't currently bound to a terminal, there's nothing to render.
+            // // If the UI isn't currently bound to a terminal, there's nothing to render.
             clear();
 
             // Skip past all of the covered screens.
@@ -129,7 +139,10 @@ namespace UnityTerminal
                 _screens[i].render(this);
             }
 
+            krender();
             _dirty = false;
         }
+
+
     }
 }

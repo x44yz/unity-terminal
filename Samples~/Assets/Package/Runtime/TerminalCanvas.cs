@@ -6,6 +6,8 @@ namespace UnityTerminal
 {
     public class TerminalCanvas : MonoBehaviour
     {
+        public static Dictionary<string, Sprite[]> spritesMap = new Dictionary<string, Sprite[]>();
+
         public SpriteRenderer bg;
         public Transform glyphsRoot;
         public float pixelToUnits = 100; // default
@@ -13,22 +15,56 @@ namespace UnityTerminal
         [Header("RUNTIME")]
         public Array2D<GlyphRender> glyphRenders;
         public Terminal terminal;
+        public Sprite[] sprites = null;
+        public Dictionary<int, int> char2SpriteIndexs;
         
-        public void Init(Terminal terminal)
+        public void Init(Terminal terminal, string resName, Dictionary<int, int> char2SpriteIndexs)
         {
+            if (spritesMap.ContainsKey(resName) == false)
+            {
+                var sprs = Resources.LoadAll<Sprite>(resName);
+                spritesMap[resName] = sprs;
+            }
+            sprites = spritesMap[resName];
+
             glyphRenders = new Array2D<GlyphRender>(terminal.width, terminal.height, null);
             this.terminal = terminal;
+            this.char2SpriteIndexs = char2SpriteIndexs;
 
             bg.transform.localScale = new Vector3(UnityEngine.Screen.width / pixelToUnits, UnityEngine.Screen.height / pixelToUnits, 1f);
         }
 
-        // private void Update() 
-        // {
-        //     if (terminal != null)
-        //         terminal.tick(Time.deltaTime);
-        // }
+        private void Update() 
+        {
+ 
+        }
 
-        public void Set(int x, int y, Sprite spr)
+        public void Render()
+        {
+           if (terminal == null)
+                return;
+
+            (terminal as RetroTerminal).render((x, y, glyph) => {
+                Debug.Log($"xx-- render > {x}, {y}, {glyph._char}");
+
+                int sprIdx = glyph._char;
+                if (char2SpriteIndexs.ContainsKey(glyph._char))
+                {
+                    sprIdx = char2SpriteIndexs[glyph._char];
+                }
+
+                if (sprIdx < 0 || sprIdx >= sprites.Length)
+                {
+                    Debug.LogError("not support glyph > " + glyph._char);
+                    return;
+                }
+
+                // _display.setGlyph(x, y, glyph);
+                this.Set(x, y, sprites[sprIdx], glyph.fore);
+            });
+        }
+
+        public void Set(int x, int y, Sprite spr, Color foreColor)
         {
             var rt = terminal as RetroTerminal;
             if (rt == null)
@@ -50,6 +86,7 @@ namespace UnityTerminal
                 gr.transform.localScale = Vector3.one * rt._scale;
             }
             gr.SetSprite(spr);
+            gr.SetColor(foreColor);
         }
     }
 }

@@ -27,6 +27,10 @@ namespace UnityTerminal
             height = size.y;
         }
 
+         public override void clearGlyph(int x, int y)
+         {
+         }
+
         public override void drawGlyph(int x, int y, char chr, Color? fore = null, Color? back = null)
         {
         }
