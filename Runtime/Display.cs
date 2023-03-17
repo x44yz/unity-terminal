@@ -61,11 +61,11 @@ namespace UnityTerminal
       if (y < 0) return;
       if (y >= height) return;
 
-      var oldGlyph = _glyphs._get(x, y);
+      var oldGlyph = _glyphs.Get(x, y);
       if (oldGlyph == null || oldGlyph.isNotEqual(glyph)) {
-        _changedGlyphs._set(x, y, glyph);
+        _changedGlyphs.Set(x, y, glyph);
       } else {
-        _changedGlyphs._set(x, y, null);
+        _changedGlyphs.Set(x, y, null);
       }
     }
 
@@ -74,7 +74,7 @@ namespace UnityTerminal
     public void render(System.Action<int, int, Glyph> renderGlyph) {
       for (var y = 0; y < height; y++) {
         for (var x = 0; x < width; x++) {
-          var glyph = _changedGlyphs._get(x, y);
+          var glyph = _changedGlyphs.Get(x, y);
 
           // Only draw glyphs that are different since the last call.
           if (glyph == null) continue;
@@ -82,8 +82,8 @@ namespace UnityTerminal
           renderGlyph(x, y, glyph);
 
           // It's up to date now.
-          _glyphs._set(x, y, glyph);
-          _changedGlyphs._set(x, y, null);
+          _glyphs.Set(x, y, glyph);
+          _changedGlyphs.Set(x, y, null);
         }
       }
     }
