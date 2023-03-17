@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityTerminal;
 
-class MainScreen : TScreen {
+class MainScreen : UnityTerminal.Screen {
   public List<Ball> balls = new List<Ball>();
 
   public MainScreen() {
@@ -222,9 +222,10 @@ public class Test : MonoBehaviour
 
         // ui.handlingInput = true;
         // ui.running = true;
+        _terminal.running = true;
 
-        gscale = Screen.height * 1f / height / (_terminal as RetroTerminal)._charHeight;
-        Camera.main.orthographicSize = Screen.height / pixelToUnits / 2;
+        gscale = UnityEngine.Screen.height * 1f / height / (_terminal as RetroTerminal)._charHeight;
+        Camera.main.orthographicSize = UnityEngine.Screen.height / pixelToUnits / 2;
     }
 
     // void updateTerminal() {

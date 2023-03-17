@@ -7,9 +7,9 @@ namespace UnityTerminal
     /// A terminal that draws to a window within another parent terminal.
     class PortTerminal : Terminal
     {
-        public override int width => size.x;
-        public override int height => size.y;
-        public override Vector2Int size => _size;
+        // public override int width => size.x;
+        // public override int height => size.y;
+        // public override Vector2Int size => _size;
 
         public int _x;
         public int _y;
@@ -22,6 +22,9 @@ namespace UnityTerminal
             this._y = _y;
             this._size = size;
             this._root = _root;
+
+            width = size.x;
+            height = size.y;
         }
 
         public override void drawGlyph(int x, int y, char chr, Color? fore = null, Color? back = null)

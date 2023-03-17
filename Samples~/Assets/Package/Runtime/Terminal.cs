@@ -6,9 +6,9 @@ namespace UnityTerminal
 {
     public abstract class Terminal
     {
-        public virtual int width => size.x;
-        public virtual int height => size.y;
-        public virtual Vector2Int size => new Vector2Int(80, 60);
+        public int width;
+        public int height;
+        // public virtual Vector2Int size => new Vector2Int(80, 60);
         Color foreColor = Color.white;
         Color backColor = Color.black;
         
@@ -61,6 +61,8 @@ namespace UnityTerminal
         // }
 
         public abstract void drawGlyph(int x, int y, char chr, Color? fore = null, Color? back = null);
+
+        // public abstract void tick(float dt);
     }
 }
 

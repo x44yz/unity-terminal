@@ -194,7 +194,7 @@ namespace UnityTerminal
         };
 
         public TerminalCanvas terminalCanvas;
-        public Display _display;
+        // public Display _display;
         public float _scale;
 
         public int _charWidth;
@@ -203,8 +203,8 @@ namespace UnityTerminal
         public static Dictionary<string, Sprite[]> spritesMap = new Dictionary<string, Sprite[]>();
         public Sprite[] sprites = null;
 
-        public override int width => _display.width;
-        public override int height => _display.height;
+        // public int width => _display.width;
+        // public int height => _display.height;
 
         public static RetroTerminal dos(int width, int height,
                 float scale, TerminalCanvas canvas) =>
@@ -222,15 +222,18 @@ namespace UnityTerminal
             float scale,
             TerminalCanvas canvas)
         {
-            var display = new Display(width, height);
+            // var display = new Display(width, height);
 
-            return new RetroTerminal(display, charWidth, charHeight, scale, resName, canvas);
+            return new RetroTerminal(width, height, charWidth, charHeight, scale, resName, canvas);
         }
 
-        RetroTerminal(Display _display, int _charWidth, int _charHeight,
+        RetroTerminal(int width, int height, int _charWidth, int _charHeight,
             float _scale, string resName,
             TerminalCanvas canvas)
         {
+            this.width = width;
+            this.height = height;
+
             if (spritesMap.ContainsKey(resName) == false)
             {
                 var sprs = Resources.LoadAll<Sprite>(resName);
@@ -238,7 +241,7 @@ namespace UnityTerminal
             }
             sprites = spritesMap[resName];
 
-            this._display = _display;
+            // this._display = _display;
             this._charWidth = _charWidth;
             this._charHeight = _charHeight;
             this._scale = _scale;

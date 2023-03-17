@@ -6,8 +6,7 @@ namespace UnityTerminal
 {
     public abstract class RenderTerminal : Terminal
     {
-        public List<TScreen> _screens = new List<TScreen>();
-        public RenderTerminal _terminal;
+        public List<Screen> _screens = new List<Screen>();
         bool _dirty = true;
 
    /// Whether or not the UI is listening for keyboard events.
@@ -42,7 +41,7 @@ namespace UnityTerminal
         // public abstract Vector2Int pixelToChar(Vector2Int pixel);
 
         /// Pushes [screen] onto the top of the stack.
-        public void push(TScreen screen)
+        public void push(Screen screen)
         {
             screen._bind(this);
             _screens.Add(screen);
@@ -65,7 +64,7 @@ namespace UnityTerminal
   /// Switches the current top screen to [screen].
         ///
         /// This is equivalent to a [pop] followed by a [push].
-        void goTo(TScreen screen)
+        void goTo(Screen screen)
         {
             var old = _screens[_screens.Count - 1];
             _screens.RemoveAt(_screens.Count - 1);
@@ -81,6 +80,11 @@ namespace UnityTerminal
             _dirty = true;
         }
     
+
+        // public override void tick(float dt)
+        // {
+        //     _tick(dt);
+        // }
 
         public void refresh()
         {
@@ -108,10 +112,7 @@ namespace UnityTerminal
         void _render()
         {
             // If the UI isn't currently bound to a terminal, there's nothing to render.
-            var terminal = _terminal;
-            if (terminal == null) return;
-
-            terminal.clear();
+            clear();
 
             // Skip past all of the covered screens.
             int i;
@@ -125,11 +126,10 @@ namespace UnityTerminal
             // Render the top opaque screen and any transparent ones above it.
             for (; i < _screens.Count; i++)
             {
-                _screens[i].render(terminal);
+                _screens[i].render(this);
             }
 
             _dirty = false;
-            terminal.render();
         }
     }
 }

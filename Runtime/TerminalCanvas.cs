@@ -19,8 +19,14 @@ namespace UnityTerminal
             glyphRenders = new Array2D<GlyphRender>(terminal.width, terminal.height, null);
             this.terminal = terminal;
 
-            bg.transform.localScale = new Vector3(Screen.width / pixelToUnits, Screen.height / pixelToUnits, 1f);
+            bg.transform.localScale = new Vector3(UnityEngine.Screen.width / pixelToUnits, UnityEngine.Screen.height / pixelToUnits, 1f);
         }
+
+        // private void Update() 
+        // {
+        //     if (terminal != null)
+        //         terminal.tick(Time.deltaTime);
+        // }
 
         public void Set(int x, int y, Sprite spr)
         {
