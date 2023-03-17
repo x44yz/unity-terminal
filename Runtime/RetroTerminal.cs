@@ -6,7 +6,7 @@ using UnityEngine.UI;
 namespace UnityTerminal
 {
     // like old school DOS
-    class RetroTerminal : RenderTerminal
+    public class RetroTerminal : RenderTerminal
     {
         // for dos.png/short-dos.png
         public static Dictionary<int, int> code2SpriteIdx = new Dictionary<int, int>()

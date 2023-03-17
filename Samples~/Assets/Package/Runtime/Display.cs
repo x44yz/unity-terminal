@@ -37,7 +37,7 @@ namespace UnityTerminal
   ///
   /// Once that's done, you can call [render]. That will invoke the callback to
   /// actually draw a glyph, but only for the ones that are actually modified.
-  class Display {
+  public class Display {
     /// The current display state. The glyphs here mirror what has been rendered.
     public Array2D<Glyph> _glyphs;
 

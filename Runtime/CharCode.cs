@@ -2,7 +2,7 @@ namespace UnityTerminal
 {
     /// Unicode code points for various special characters that also exist on
     /// [font]: http://en.wikipedia.org/wiki/Code_page_437
-    class CharCode
+    public class CharCode
     {
         // 1 - 15.
         public const int whiteSmilingFace = 0x263a;
