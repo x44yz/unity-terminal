@@ -15,7 +15,7 @@ namespace UnityTerminal
             Fill(0, 0, width, height);
         }
 
-        void Fill(int x, int y, int width, int height, Color? color = null)
+        public void Fill(int x, int y, int width, int height, Color? color = null)
         {
             color ??= backColor;
 

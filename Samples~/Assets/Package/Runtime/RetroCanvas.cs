@@ -43,7 +43,7 @@ namespace UnityTerminal
                 for (var y = 0; y < terminal.height; y++) {
                     var glyph = terminal.glyphs.Get(x, y);
                 
-                    if (glyph == null || glyph.ch == CharCode.space)
+                    if (glyph == null /*|| glyph.ch == CharCode.space*/)
                     {
                         this.Set(x, y, null, Color.white);
                     }

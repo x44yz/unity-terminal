@@ -28,6 +28,7 @@ namespace UnityTerminal
 
         public override void Render(Terminal terminal)
         {
+            terminal.Fill(sx, sy, terminal.width - sx * 2, terminal.height - sy * 2);
             TerminalUtils.DrawBox(terminal, sx, sy, boxColor);
 
             int tx = sx + titlePaddingX + 1;

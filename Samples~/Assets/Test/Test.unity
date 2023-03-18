@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.12731713, g: 0.13414736, b: 0.12107852, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731715, g: 0.13414735, b: 0.121078536, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -152,11 +152,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ddb56a7212fdb7468c877f5f1e3cd7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 23
-  height: 9
+  width: 32
+  height: 13
   offX: 0
   offY: 0
-  glyphScale: 9.23
   init: 0
   retroCanvas: {fileID: 1664558116}
   swidth: 1920

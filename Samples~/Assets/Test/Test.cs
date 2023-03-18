@@ -43,19 +43,19 @@ class MainScreen : UnityTerminal.Screen {
   //   }
   // }
 
-  public int x = 0;
+  public int x = 7;
   public float tick = 0f;
   public override void Tick(float dt) {
     // foreach (var ball in balls) {
     //   ball.update();
     // }
-    // tick += dt;
-    // if (tick > 0.5f)
-    // {
-    //   tick = 0f;
-    //   x = (x + 1)%terminal.width;
-    //   // Debug.Log("xx-- x > " + x);
-    // }
+    tick += dt;
+    if (tick > 0.5f)
+    {
+      tick = 0f;
+      x = (x + 1)%terminal.width;
+      // Debug.Log("xx-- x > " + x);
+    }
 
     Dirty();
   }
@@ -66,13 +66,17 @@ class MainScreen : UnityTerminal.Screen {
     if (Input.GetKeyDown(KeyCode.Space))
     {
       Debug.Log("space button down");
+      // terminal.push(ConfirmDialog.Create(
+      //     "hello",
+      //     "ni hao ya"
+      //   ));
     }
   }
 
   public override void Render(Terminal terminal) {
-    TerminalUtils.DrawBox(terminal, 2, 1, TerminalColor.green);
+    // TerminalUtils.DrawBox(terminal, 2, 1, TerminalColor.green);
 
-    terminal.WriteAt(x, 0, "P", TerminalColor.lightGold);
+    terminal.WriteAt(x, 2, "P", TerminalColor.lightGold);
     terminal.WriteAt(0, 1, "å");
     // terminal.writeAt(7, 4, "å");
     // terminal.writeAt(0, 0, "Predefined colors:");
@@ -142,49 +146,6 @@ class MainScreen : UnityTerminal.Screen {
   }
 }
 
-// class Ball {
-//   public const float pitWidth = 56.0f;
-//   public const float pitHeight = 17.0f;
-
-//   public Color color;
-//   public int charCode;
-
-//   float x, y, h, v;
-
-//   public Ball(Color color, int charCode, 
-//         float x, float y, float h, float v)
-//   {
-//     this.color = color;
-//     this.charCode = charCode;
-//     this.x = x;
-//     this.y = y;
-//     this.h = h;
-//     this.v = v;
-//   }
-
-//   public void update() {
-//     x += h;
-//     if (x < 0.0) {
-//       x = -x;
-//       h = -h;
-//     } else if (x > pitWidth) {
-//       x = pitWidth - x + pitWidth;
-//       h = -h;
-//     }
-
-//     v += 0.03f;
-//     y += v;
-//     if (y > pitHeight) {
-//       y = pitHeight - y + pitHeight;
-//       v = -v;
-//     }
-//   }
-
-//   public void render(Terminal terminal) {
-//     terminal.drawGlyph(24 + (int)x, 13 + (int)y, (char)charCode, color);
-//   }
-// }
-
 public class Test : MonoBehaviour
 {
     public int width = 80;
@@ -193,26 +154,6 @@ public class Test : MonoBehaviour
     public float offY = 0f;
 
     // public UserInterface ui = new UserInterface();
-
-    public float glyphScale = 1f;
-    /// A few different terminals to choose from.
-    public Terminal terminals(int idx) {
-      float scale = Mathf.Min(swidth / (width * 9.0f), sheight / (height * 13.0f));
-      scale = glyphScale;
-
-      return RetroTerminal.ShortDos(width, height, scale, retroCanvas as RetroCanvas); 
-
-        // if (idx == 0) return RetroTerminal.dos(width, height);
-        // else if (idx == 1) return RetroTerminal.shortDos(width, height, scale); // 9x13
-        // else if (idx == 2) return CanvasTerminal.create(width, height,
-        // new Malison.Font("Menlo, Consolas", size: 12, w: 8, h: 14, x: 1, y: 11));
-        // else if (idx == 3) return CanvasTerminal.create(
-        // width, height, new Malison.Font("Courier", size: 13, w: 10, h: 15, x: 1, y: 11));
-        // else if (idx == 4) return CanvasTerminal.create(
-        // width, height, new Malison.Font("Courier", size: 12, w: 8, h: 14, x: 1, y: 10));
-        // UnityEngine.Debug.LogError("not sumpper > " + idx);
-        return null;
-    }
 
     /// Index of the current terminal in [terminals].
     int terminalIndex = 1;
@@ -239,8 +180,10 @@ public class Test : MonoBehaviour
         // ui.keyPress.bind("animate", Malison.KeyCode.space);
         // ui.keyPress.bind("profile", Malison.KeyCode.p);
 
+        gscale = UnityEngine.Screen.height * 1f / height / 13.0f;
+
         // updateTerminal();
-        _terminal = (RenderTerminal)terminals(0);
+        _terminal = RetroTerminal.ShortDos(width, height, gscale, retroCanvas as RetroCanvas);
 
         // ui.push(new MainScreen());
         _terminal.push(new MainScreen());
@@ -253,7 +196,7 @@ public class Test : MonoBehaviour
         // ui.running = true;
         _terminal.running = true;
 
-        gscale = UnityEngine.Screen.height * 1f / height / (_terminal as RetroTerminal).charHeight;
+        
         Camera.main.orthographicSize = UnityEngine.Screen.height / pixelToUnits / 2;
     }
 
