@@ -6,8 +6,9 @@ TODO:
 [x]led effect  
 [+]canvas fade in/out effect  
 [+]terminal background color  
-[+]dialog  
+[x]dialog  
 [+]confirm dialog  
 [+]choose dialog  
+[+]dialog button  
 
 

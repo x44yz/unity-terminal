@@ -244,6 +244,10 @@ public class Test : MonoBehaviour
 
         // ui.push(new MainScreen());
         _terminal.push(new MainScreen());
+        _terminal.push(ConfirmDialog.Create(
+          "hello",
+          "ni hao ya"
+        ));
 
         // ui.handlingInput = true;
         // ui.running = true;
