@@ -11,7 +11,7 @@ namespace UnityTerminal
 
         public static GlyphRender Create(Transform parent)
         {
-            var obj = new GameObject(/*$"spr{x}x{y}"*/);
+            var obj = new GameObject();
             obj.transform.SetParent(parent);
             var glyphRender = obj.AddComponent<GlyphRender>();
             glyphRender.spr = obj.AddComponent<SpriteRenderer>();

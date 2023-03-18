@@ -3,19 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityTerminal;
 
+class DialogScreen : UnityTerminal.Screen {
+  
+}
+
 class MainScreen : UnityTerminal.Screen {
   // public List<Ball> balls = new List<Ball>();
 
   public MainScreen() {
     var colors = new List<Color>{
       Color.red,
-      ColorX.orange,
-      ColorX.gold,
+      TerminalColor.orange,
+      TerminalColor.gold,
       Color.yellow,
       Color.green,
-      ColorX.aqua,
+      TerminalColor.aqua,
       Color.blue,
-      ColorX.purple
+      TerminalColor.purple
     };
 
     // foreach (var _char in "0123456789") {
@@ -41,23 +45,35 @@ class MainScreen : UnityTerminal.Screen {
 
   public int x = 0;
   public float tick = 0f;
-  public override void update(float dt) {
+  public override void Tick(float dt) {
     // foreach (var ball in balls) {
     //   ball.update();
     // }
-    tick += dt;
-    if (tick > 0.5f)
-    {
-      tick = 0f;
-      x = (x + 1)%terminal.width;
-      // Debug.Log("xx-- x > " + x);
-    }
+    // tick += dt;
+    // if (tick > 0.5f)
+    // {
+    //   tick = 0f;
+    //   x = (x + 1)%terminal.width;
+    //   // Debug.Log("xx-- x > " + x);
+    // }
 
-    dirty();
+    Dirty();
   }
-  public override void render(Terminal terminal) {
-    terminal.writeAt(x, 0, "P", ColorX.lightGold);
-    terminal.writeAt(0, 1, "å");
+
+  public override void HandleInput()
+  {
+    // check input
+    if (Input.GetKeyDown(KeyCode.Space))
+    {
+      Debug.Log("space button down");
+    }
+  }
+
+  public override void Render(Terminal terminal) {
+    TerminalUtils.DrawBox(terminal, 2, 1, TerminalColor.green);
+
+    terminal.WriteAt(x, 0, "P", TerminalColor.lightGold);
+    terminal.WriteAt(0, 1, "å");
     // terminal.writeAt(7, 4, "å");
     // terminal.writeAt(0, 0, "Predefined colors:");
     // terminal.writeAt(59, 0, "switch terminal [tab]", ColorX.darkGray);
@@ -184,7 +200,7 @@ public class Test : MonoBehaviour
       float scale = Mathf.Min(swidth / (width * 9.0f), sheight / (height * 13.0f));
       scale = glyphScale;
 
-      return RetroTerminal.shortDos(width, height, scale, terminalCanvas); 
+      return RetroTerminal.ShortDos(width, height, scale, retroCanvas as RetroCanvas); 
 
         // if (idx == 0) return RetroTerminal.dos(width, height);
         // else if (idx == 1) return RetroTerminal.shortDos(width, height, scale); // 9x13
@@ -208,7 +224,7 @@ public class Test : MonoBehaviour
     }
 
     public bool init = false;
-    public TerminalCanvas terminalCanvas;
+    public RetroCanvas retroCanvas;
     public RenderTerminal _terminal = null;
 
     void Init()
@@ -233,7 +249,7 @@ public class Test : MonoBehaviour
         // ui.running = true;
         _terminal.running = true;
 
-        gscale = UnityEngine.Screen.height * 1f / height / (_terminal as RetroTerminal)._charHeight;
+        gscale = UnityEngine.Screen.height * 1f / height / (_terminal as RetroTerminal).charHeight;
         Camera.main.orthographicSize = UnityEngine.Screen.height / pixelToUnits / 2;
     }
 
@@ -249,7 +265,7 @@ public class Test : MonoBehaviour
             Init();
 
         if (_terminal != null)
-            _terminal._tick(Time.deltaTime);
+            _terminal.Tick(Time.deltaTime);
     }
 
     public float swidth;
@@ -266,7 +282,7 @@ public class Test : MonoBehaviour
       if (_terminal == null)
         return;
 
-      if (terminalCanvas == null)
+      if (retroCanvas == null)
         return;
 
       // if (MalisonUnity.Inst == null)
@@ -274,8 +290,8 @@ public class Test : MonoBehaviour
 
       // 600 / 1.2
       // float pixelToUnits = Camera.main.ScreenToWorldPoint
-      float charWidth = (_terminal as RetroTerminal)._charWidth;
-      float charHeight = (_terminal as RetroTerminal)._charHeight;
+      float charWidth = (_terminal as RetroTerminal).charWidth;
+      float charHeight = (_terminal as RetroTerminal).charHeight;
       // var scale = Mathf.Min(swidth / (ui._terminal.width * charWidth), sheight / (ui._terminal.height * charHeight));
 
       charWidth *= gscale;
@@ -289,15 +305,15 @@ public class Test : MonoBehaviour
 
       for (int i = 0; i <= _terminal.width; ++i)
       {
-          Vector3 bpos = terminalCanvas.glyphsRoot.position + off + new Vector3(i * charWidth / pixelToUnits, 0 * charHeight/ pixelToUnits, gizmoPos);
-          Vector3 epos = terminalCanvas.glyphsRoot.position + off + new Vector3(i * charWidth/ pixelToUnits, -_terminal.height * charHeight/ pixelToUnits, gizmoPos);
+          Vector3 bpos = retroCanvas.glyphsRoot.position + off + new Vector3(i * charWidth / pixelToUnits, 0 * charHeight/ pixelToUnits, gizmoPos);
+          Vector3 epos = retroCanvas.glyphsRoot.position + off + new Vector3(i * charWidth/ pixelToUnits, -_terminal.height * charHeight/ pixelToUnits, gizmoPos);
           Gizmos.DrawLine(bpos, epos);
       }
 
       for (int j = 0; j <= _terminal.height; ++j)
       {
-          Vector3 bpos = terminalCanvas.glyphsRoot.position + off + new Vector3(0 * charWidth/ pixelToUnits, -j * charHeight/ pixelToUnits, gizmoPos);
-          Vector3 epos = terminalCanvas.glyphsRoot.position + off + new Vector3(_terminal.width * charWidth/ pixelToUnits, -j * charHeight/ pixelToUnits, gizmoPos);
+          Vector3 bpos = retroCanvas.glyphsRoot.position + off + new Vector3(0 * charWidth/ pixelToUnits, -j * charHeight/ pixelToUnits, gizmoPos);
+          Vector3 epos = retroCanvas.glyphsRoot.position + off + new Vector3(_terminal.width * charWidth/ pixelToUnits, -j * charHeight/ pixelToUnits, gizmoPos);
           Gizmos.DrawLine(bpos, epos);
       }
     }

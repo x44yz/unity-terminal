@@ -6,140 +6,91 @@ namespace UnityTerminal
 {
     public abstract class RenderTerminal : Terminal
     {
-        public List<Screen> _screens = new List<Screen>();
-        bool _dirty = true;
+        public List<Screen> screens = new List<Screen>();
+        public bool dirty = true;
+        public bool handlingInput = false;
+        public bool running = false;
 
-   /// Whether or not the UI is listening for keyboard events.
-        ///
-        /// Initially off.
-        bool _handlingInput = false;
-
-        bool _running = false;
-        public bool running
-        {
-            get { return _running; }
-            set
-            {
-                if (value == _running) return;
-
-                _running = value;
-                if (_running)
-                {
-                    // MalisonUnity.Inst.onUpdate = _tick;
-                }
-                else
-                {
-                    // MalisonUnity.Inst.onUpdate = null;
-                }
-            }
-        }
-
-        // public abstract void render(System.Action<int, int, Glyph> renderGlyph);
-        // public abstract void krender();
-
-        /// Given a point in pixel coordinates, returns the coordinates of the
-        /// character that contains that pixel.
-        // public abstract Vector2Int pixelToChar(Vector2Int pixel);
-
-        /// Pushes [screen] onto the top of the stack.
         public void push(Screen screen)
         {
-            screen._bind(this);
-            _screens.Add(screen);
-            _render();
+            screen.Bind(this);
+            screens.Add(screen);
+            _Render();
         }
 
-        /// Pops the top screen off the top of the stack.
-        ///
-        /// The next screen down is activated. If [result] is given, it is passed to
-        /// the new active screen's [activate] method.
-        void pop(object? result)
+        public void pop(object? result)
         {
-            var screen = _screens[_screens.Count - 1];
-            _screens.RemoveAt(_screens.Count - 1);
-            screen._unbind();
-            _screens[_screens.Count - 1].activate(screen, result);
-            _render();
+            var screen = screens[screens.Count - 1];
+            screens.RemoveAt(screens.Count - 1);
+            screen.Unbind();
+            screens[screens.Count - 1].Activate(screen, result);
+            _Render();
         }
 
-  /// Switches the current top screen to [screen].
-        ///
-        /// This is equivalent to a [pop] followed by a [push].
-        void goTo(Screen screen)
+        void SwithTo(Screen screen)
         {
-            var old = _screens[_screens.Count - 1];
-            _screens.RemoveAt(_screens.Count - 1);
-            old._unbind();
+            var old = screens[screens.Count - 1];
+            screens.RemoveAt(screens.Count - 1);
+            old.Unbind();
 
-            screen._bind(this);
-            _screens.Add(screen);
-            _render();
+            screen.Bind(this);
+            screens.Add(screen);
+            _Render();
         }
 
-        public void dirty()
+        public void Dirty()
         {
-            _dirty = true;
+            dirty = true;
         }
-    
 
-        // public override void tick(float dt)
-        // {
-        //     _tick(dt);
-        // }
-
-        // public void refresh()
-        // {
-        //     // Don't use a for-in loop here so that we don't run into concurrent
-        //     // modification exceptions if a screen is added or removed during a call to
-        //     // update().
-        //     for (var i = 0; i < _screens.Count; i++)
-        //     {
-        //         _screens[i].update();
-        //     }
-        //     if (_dirty) 
-        //         _render();
-        // }
-
-     /// Called every animation frame while the UI's game loop is running.
-        public void _tick(float dt)
+        public override void Tick(float dt)
         {
-            if (!_running)
+            if (!running)
                 return;
 
-            // Don't use a for-in loop here so that we don't run into concurrent
-            // modification exceptions if a screen is added or removed during a call to
-            // update().
-            for (var i = 0; i < _screens.Count; i++)
+            for (var i = 0; i < screens.Count; i++)
             {
-                _screens[i].update(dt);
+                screens[i].Tick(dt);
             }
-            if (_dirty) 
-                _render();
 
-            // if (_running) html.window.requestAnimationFrame(_tick);
+            // Check input
+            if (screens.Count > 0)
+            {
+                screens[screens.Count - 1].HandleInput();
+            }
+
+            if (dirty) 
+                _Render();
         }
 
-        protected virtual void _render()
+        protected virtual void _Render()
         {
-            // // If the UI isn't currently bound to a terminal, there's nothing to render.
-            clear();
+            Clear();
 
             // Skip past all of the covered screens.
             int i;
-            for (i = _screens.Count - 1; i >= 0; i--)
+            for (i = screens.Count - 1; i >= 0; i--)
             {
-                if (!_screens[i].isTransparent) break;
+                if (!screens[i].isTransparent)
+                    break;
             }
 
             if (i < 0) i = 0;
 
             // Render the top opaque screen and any transparent ones above it.
-            for (; i < _screens.Count; i++)
+            for (; i < screens.Count; i++)
             {
-                _screens[i].render(this);
+                screens[i].Render(this);
             }
 
-            _dirty = false;
+            dirty = false;
         }
+
+        // public bool IsTopScreen(Screen screen)
+        // {
+        //     if (screens == null)
+        //         return false;
+        //     return screens[screens.Count - 1] == screen;
+        // }
     }
 }

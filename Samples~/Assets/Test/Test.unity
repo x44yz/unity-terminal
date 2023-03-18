@@ -158,7 +158,7 @@ MonoBehaviour:
   offY: 0
   glyphScale: 9.23
   init: 0
-  terminalCanvas: {fileID: 1664558116}
+  retroCanvas: {fileID: 1664558116}
   swidth: 1920
   sheight: 1080
   showDisplay: 1
@@ -387,12 +387,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1664558114}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ad6b44abedb6fc438c3f27a630ae912, type: 3}
+  m_Script: {fileID: 11500000, guid: b2fe63646fd7028459001f07afda0c6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   bg: {fileID: 1348726872}
   glyphsRoot: {fileID: 2034700301}
   pixelToUnits: 100
+  sprites: []
 --- !u!1 &2034700300
 GameObject:
   m_ObjectHideFlags: 0

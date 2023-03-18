@@ -8,62 +8,41 @@ namespace UnityTerminal
     {
         public int width;
         public int height;
-        // public virtual Vector2Int size => new Vector2Int(80, 60);
-        Color foreColor = Color.white;
-        Color backColor = Color.black;
-        
-        public void clear()
+        public Color backColor = Color.black;
+    
+        public virtual void Clear()
         {
-            fill(0, 0, width, height);
+            Fill(0, 0, width, height);
         }
 
-        /// Clears and fills the given rectangle with [color].
-        void fill(int x, int y, int width, int height, Color? color = null)
+        void Fill(int x, int y, int width, int height, Color? color = null)
         {
             color ??= backColor;
 
-            // var glyph = new Glyph(CharCode.space, foreColor, color);
-
             for (var py = y; py < y + height; py++) {
               for (var px = x; px < x + width; px++) {
-                clearGlyph(px, py);
+                WriteAt(px, py, CharCode.space);
               }
             }
-            // MalisonUnity.Inst.canvasBg.color = color.toUnityColor;
         }
 
-        /// Writes [text] starting at column [x], row [y] using [fore] as the text
-        /// color and [back] as the background color.
-        public void writeAt(int x, int y, string text, Color? fore = null, Color? back = null)
+        public bool CheckBounds(int x, int y, bool log = false)
         {
-            fore ??= foreColor;
-            back ??= backColor;
-
-            // TODO: Bounds check.
-            for (var i = 0; i < text.Length; i++)
+            if (x < 0 || x >= width ||
+                y < 0 || y >= height)
             {
-                if (x + i >= width) break;
-                drawGlyph(x + i, y, text[i], fore, back);
+                if (log)
+                    Debug.LogError($"{{{x}, {y}}} is out of terminal bounds.");
+                return false;
             }
+            return true;
         }
 
-        Terminal rect(int x, int y, int width, int height)
-        {
-            // TODO: Bounds check.
-            return new PortTerminal(x, y, new Vector2Int(width, height), this);
-        }
+        public abstract void Tick(float dt);
 
-        /// Writes a one-character string consisting of [charCode] at column [x],
-        /// row [y] using [fore] as the text color and [back] as the background color.
-        // public void drawChar(int x, int y, int charCode, Color? fore = null, Color? back = null)
-        // {
-        //     drawGlyph(x, y, new Glyph(charCode, fore, back));
-        // }
-
-        public abstract void drawGlyph(int x, int y, char chr, Color? fore = null, Color? back = null);
-        public abstract void clearGlyph(int x, int y);
-
-        // public abstract void tick(float dt);
+        // RetorTerminal
+        public virtual void WriteAt(int x, int y, string text, Color? fore = null) {}
+        public virtual void WriteAt(int x, int y, int charCode, Color? fore = null) {}
     }
 }
 

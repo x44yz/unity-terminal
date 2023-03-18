@@ -6,35 +6,39 @@ namespace UnityTerminal
 {
     public class Screen
     {
-        // UserInterface _ui;
-
-        /// The [UserInterface] this screen is bound to.
-        ///
-        /// Throws an exception if the screen is not currently bound to an interface.
-        // public UserInterface ui => _ui!;
         public RenderTerminal terminal = null;
 
-        /// Whether this screen is bound to a [UserInterface].
+        /// Whether this screen is bound to a [RenderTerminal].
         ///
-        /// If this is `false`, then [ui] cannot be accessed.
-        bool isBound => terminal != null;
+        /// If this is `false`, then [terminal] cannot be accessed.
+        bool isBind => terminal != null;
 
         /// Whether this screen allows any screens under it to be visible.
         ///
         /// Subclasses can override this. Defaults to `false`.
         public bool isTransparent => false;
 
-        /// Binds this screen to [ui].
-        public void _bind(RenderTerminal tel)
+        // public bool isTop
+        // {
+        //     get 
+        //     {
+        //         if (terminal == null)
+        //             return false;
+        //         return terminal.IsTopScreen(this);
+        //     }
+        // }
+
+        /// Binds this screen to [terminal].
+        public void Bind(RenderTerminal tel)
         {
             Debug.Assert(terminal == null);
             terminal = tel;
 
-            resize(terminal.width, terminal.height);
+            Resize(terminal.width, terminal.height);
         }
 
-        /// Unbinds this screen from the [ui] that owns it.
-        public void _unbind()
+        /// Unbinds this screen from the [terminal] that owns it.
+        public void Unbind()
         {
             Debug.Assert(terminal != null);
             terminal = null;
@@ -44,26 +48,24 @@ namespace UnityTerminal
         ///
         /// Call this during [update] to indicate that a subsequent call to [render]
         /// is needed.
-        public void dirty()
+        public void Dirty()
         {
             // If we aren't bound (yet), just do nothing. The screen will be dirtied
             // when it gets bound.
             if (terminal == null) return;
 
-            terminal!.dirty();
+            terminal.Dirty();
         }
 
         /// Called when the screen above this one ([popped]) has been popped and this
         /// screen is now the top-most screen. If a value was passed to [pop()], it
         /// will be passed to this as [result].
-        public virtual void activate(Screen popped, object result) { }
-
-        public virtual void update(float dt) { }
-
-        public virtual void render(Terminal terminal) { }
-
+        public virtual void Activate(Screen popped, object result) { }
+        public virtual void Tick(float dt) { }
+        public virtual void HandleInput() { }
+        public virtual void Render(Terminal terminal) { }
         /// Called when the [UserInterface] has been bound to a new terminal with a
         /// different size while this [Screen] is present.
-        public virtual void resize(int width, int height) { }
+        public virtual void Resize(int width, int height) { }
     }
 }

@@ -46,6 +46,12 @@ namespace UnityTerminal
                 elements[i] = value;
         }
 
+        public void Fill(System.Func<T> func)
+        {
+            for (int i = 0; i < elements.Count; ++i)
+                elements[i] = func();
+        }
+
         private void CheckBounds(int x, int y)
         {
             if (x < 0 || x >= width)

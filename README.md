@@ -4,6 +4,10 @@ The first version is unity porting of [Malison](https://github.com/munificent/ma
 TODO:  
 [x]glyph color  
 [x]led effect  
-[+]canvas fade in/out effect 
+[+]canvas fade in/out effect  
+[+]terminal background color  
+[+]dialog  
+[+]confirm dialog  
+[+]choose dialog  
 
 
