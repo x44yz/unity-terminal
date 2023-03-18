@@ -52,12 +52,12 @@ namespace UnityTerminal
 
     public class Glyph
     {
-        public static Glyph clear = new Glyph(CharCode.space);
+        public static Glyph clear => new Glyph(CharCode.space);
 
         public int _char;
         public Color fore;
-        public Color back;
-        public bool dirty;
+        // public Color back;
+        // public bool dirty;
 
         // public static Glyph fromDynamic(object charOrCharCode, Color? fore = null, Color? back = null)
         // {
@@ -66,19 +66,19 @@ namespace UnityTerminal
         //     return new Glyph((int)charOrCharCode, fore, back);
         // }
 
-        public Glyph(char ch, Color? fore = null, Color? back = null)
+        public Glyph(char ch, Color? fore = null)
         {
             this._char = ch;
             this.fore = fore != null ? fore.Value : Color.white;
-            this.back = back != null ? back.Value : Color.black;
+            // this.back = back != null ? back.Value : Color.black;
         }
 
 
-        public Glyph(int ch, Color? fore = null, Color? back = null)
+        public Glyph(int ch, Color? fore = null)
         {
             this._char = ch;
             this.fore = fore != null ? fore.Value : Color.white;
-            this.back = back != null ? back.Value : Color.black;
+            // this.back = back != null ? back.Value : Color.black;
         }
 
         public bool isEqual(int ch, Color fore)
@@ -90,7 +90,7 @@ namespace UnityTerminal
         {
             if (other == null)
                 return false;
-            return _char == other._char && fore == other.fore && back == other.back;
+            return _char == other._char && fore == other.fore;
         }
 
         public bool isNotEqual(Glyph other)

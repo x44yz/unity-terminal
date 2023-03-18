@@ -20,7 +20,19 @@ namespace UnityTerminal
 
         public void SetSprite(Sprite s)
         {
+            if (s == null)
+            {
+                gameObject.SetActive(false);
+                return;
+            }
+
+            gameObject.SetActive(true);
             spr.sprite = s;
+        }
+
+        public void SetColor(Color color)
+        {
+            spr.color = color;
         }
     }
 }

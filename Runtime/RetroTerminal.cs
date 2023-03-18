@@ -200,11 +200,14 @@ namespace UnityTerminal
         public int _charWidth;
         public int _charHeight;
 
-        public static Dictionary<string, Sprite[]> spritesMap = new Dictionary<string, Sprite[]>();
-        public Sprite[] sprites = null;
-
         // public int width => _display.width;
         // public int height => _display.height;
+
+        /// The current display state. The glyphs here mirror what has been rendered.
+        public Array2D<Glyph> _glyphs;
+
+        /// The glyphs that have been modified since the last call to [render].
+        // public Array2D<Glyph> _changedGlyphs;
 
         public static RetroTerminal dos(int width, int height,
                 float scale, TerminalCanvas canvas) =>
@@ -234,36 +237,99 @@ namespace UnityTerminal
             this.width = width;
             this.height = height;
 
-            if (spritesMap.ContainsKey(resName) == false)
-            {
-                var sprs = Resources.LoadAll<Sprite>(resName);
-                spritesMap[resName] = sprs;
-            }
-            sprites = spritesMap[resName];
-
             // this._display = _display;
             this._charWidth = _charWidth;
             this._charHeight = _charHeight;
             this._scale = _scale;
 
             this.terminalCanvas = canvas;
-            this.terminalCanvas.Init(this);
+            this.terminalCanvas.Init(this, resName, code2SpriteIdx);
+
+            _glyphs = new Array2D<Glyph>(width, height, null);
+            for (int i = 0; i < _glyphs.width; ++i)
+            {
+                for (int j = 0; j < _glyphs.height; ++j)
+                    _glyphs.Set(i, j, Glyph.clear);
+            }
+
+            // _changedGlyphs = new Array2D<Glyph>(width, height, Glyph.clear);
+        }
+
+        public override void clearGlyph(int x, int y)
+        {
+            if (x < 0) return;
+            if (x >= width) return;
+            if (y < 0) return;
+            if (y >= height) return;
+
+            // _changedGlyphs.Get(x, y)._char = Glyph.clear._char;
+            // _changedGlyphs.Get(x, y).dirty = true;
+            _glyphs.Get(x, y)._char = CharCode.space;
+            // _changedGlyphs.Set(x, y, null);
+            // Debug.Log($"xx-- set > {x},{y},{Glyph.clear._char}");
         }
 
         public override void drawGlyph(int x, int y, char chr, Color? fore = null, Color? back = null)
         {
-            if (code2SpriteIdx.ContainsKey(chr))
-            {
-                var sprIdx = code2SpriteIdx[chr];
+            if (x < 0) return;
+            if (x >= width) return;
+            if (y < 0) return;
+            if (y >= height) return;
 
-                // _display.setGlyph(x, y, glyph);
-                this.terminalCanvas.Set(x, y, sprites[sprIdx]);
+            // todo: optimize
+            // var glyph = _glyphs.Get(x, y);
+            // if (glyph.isEqual(chr, fore.Value) == false) {
+            //     _changedGlyphs.Get(x, y)._char = chr;
+            //     _changedGlyphs.Get(x, y).dirty = true;
+            // } else {
+            //     _changedGlyphs.Get(x, y)._char = Glyph.clear._char;
+            //     _changedGlyphs.Get(x, y).dirty = true;
+            // }
+            // var glyph = new Glyph(chr, fore, back);
+            if (_glyphs.Get(x, y).isEqual(chr, fore.Value) == false)
+            {
+                // Debug.Log($"xx-- set 1 > {x}, {y} " + glyph._char);
+                _glyphs.Get(x, y)._char = chr;
+                _glyphs.Get(x, y).fore = fore.Value;
+                Debug.Log($"xx-- set > {x},{y},{chr}");
             }
+            // else
+            // {
+            //     // if (x == 0 && y == 1) Debug.Log("xx-- set 2 > null ");
+            //     _changedGlyphs.Set(x, y, null);
+            // }
         }
 
-        public override void render()
+        protected override void _render()
         {
-            // todo
+            base._render();
+
+            terminalCanvas.Render();
+        }
+
+        public void render(Action<int, int, Glyph> renderGlyph)
+        {
+            for (var y = 0; y < height; y++) {
+                for (var x = 0; x < width; x++) {
+                    var glyph = _glyphs.Get(x, y);
+                    
+
+                    // Only draw glyphs that are different since the last call.
+                    // if (glyph == null) continue;
+                    // if (glyph.dirty == false) continue;
+
+                    renderGlyph(x, y, glyph);
+
+                    // It's up to date now.
+                    // _glyphs.Get(x, y)._char = glyph._char;
+                    // _glyphs.Get(x, y).fore = glyph.fore;
+                    // _changedGlyphs.Get(x, y)._char = Glyph.clear._char;
+                    // _changedGlyphs.Get(x, y).dirty = false;
+                    // _glyphs.Set(x, y, glyph);
+                    // _changedGlyphs.Set(x, y, null);
+                    // if (x == 0 && y == 1) Debug.Log("xx-- set 3 > null ");
+                }
+            }
         }
 
         // public override void render()

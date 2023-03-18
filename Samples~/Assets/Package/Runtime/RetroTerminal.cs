@@ -245,7 +245,13 @@ namespace UnityTerminal
             this.terminalCanvas = canvas;
             this.terminalCanvas.Init(this, resName, code2SpriteIdx);
 
-            _glyphs = new Array2D<Glyph>(width, height, Glyph.clear);
+            _glyphs = new Array2D<Glyph>(width, height, null);
+            for (int i = 0; i < _glyphs.width; ++i)
+            {
+                for (int j = 0; j < _glyphs.height; ++j)
+                    _glyphs.Set(i, j, Glyph.clear);
+            }
+
             // _changedGlyphs = new Array2D<Glyph>(width, height, Glyph.clear);
         }
 
@@ -258,8 +264,9 @@ namespace UnityTerminal
 
             // _changedGlyphs.Get(x, y)._char = Glyph.clear._char;
             // _changedGlyphs.Get(x, y).dirty = true;
-            _glyphs.Get(x, y)._char = Glyph.clear._char;
+            _glyphs.Get(x, y)._char = CharCode.space;
             // _changedGlyphs.Set(x, y, null);
+            // Debug.Log($"xx-- set > {x},{y},{Glyph.clear._char}");
         }
 
         public override void drawGlyph(int x, int y, char chr, Color? fore = null, Color? back = null)
@@ -284,6 +291,7 @@ namespace UnityTerminal
                 // Debug.Log($"xx-- set 1 > {x}, {y} " + glyph._char);
                 _glyphs.Get(x, y)._char = chr;
                 _glyphs.Get(x, y).fore = fore.Value;
+                Debug.Log($"xx-- set > {x},{y},{chr}");
             }
             // else
             // {

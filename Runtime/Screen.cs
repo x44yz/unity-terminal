@@ -58,7 +58,7 @@ namespace UnityTerminal
         /// will be passed to this as [result].
         public virtual void activate(Screen popped, object result) { }
 
-        public virtual void update() { }
+        public virtual void update(float dt) { }
 
         public virtual void render(Terminal terminal) { }
 
