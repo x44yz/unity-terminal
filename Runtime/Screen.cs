@@ -16,7 +16,7 @@ namespace UnityTerminal
         /// Whether this screen allows any screens under it to be visible.
         ///
         /// Subclasses can override this. Defaults to `false`.
-        public bool isTransparent => false;
+        public bool isTransparent = false;
 
         // public bool isTop
         // {
