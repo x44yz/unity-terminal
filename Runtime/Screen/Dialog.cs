@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace UnityTerminal
 {
-    public class ConfirmDialog : Screen
+    public class Dialog : Screen
     {
         public string title;
         public string message;
@@ -16,18 +16,28 @@ namespace UnityTerminal
         public int msgPaddingX = 0;
         public int msgPaddingY = 1;
 
-        public static ConfirmDialog Create(string title,
+        public static Dialog Create(string title,
             string msg)
         {
-            var dialog = new ConfirmDialog();
+            var dialog = new Dialog();
             dialog.title = title;
             dialog.message = msg;
             dialog.isTransparent = true;
             return dialog;
         }
 
+        public override void HandleInput()
+        {
+            base.HandleInput();
+
+            if (Input.GetKeyDown(KeyCode.Space))
+                terminal.Pop(this);
+        }
+
         public override void Render(Terminal terminal)
         {
+            base.Render(terminal);
+
             terminal.Fill(sx, sy, terminal.width - sx * 2, terminal.height - sy * 2);
             TerminalUtils.DrawBox(terminal, sx, sy, boxColor);
 

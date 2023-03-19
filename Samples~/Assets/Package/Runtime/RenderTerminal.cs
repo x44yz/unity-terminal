@@ -11,14 +11,14 @@ namespace UnityTerminal
         public bool handlingInput = false;
         public bool running = false;
 
-        public void push(Screen screen)
+        public void Push(Screen screen)
         {
             screen.Bind(this);
             screens.Add(screen);
             _Render();
         }
 
-        public void pop(object? result)
+        public void Pop(object result = null)
         {
             var screen = screens[screens.Count - 1];
             screens.RemoveAt(screens.Count - 1);

@@ -186,8 +186,8 @@ public class Test : MonoBehaviour
         _terminal = RetroTerminal.ShortDos(width, height, gscale, retroCanvas as RetroCanvas);
 
         // ui.push(new MainScreen());
-        _terminal.push(new MainScreen());
-        _terminal.push(ConfirmDialog.Create(
+        _terminal.Push(new MainScreen());
+        _terminal.Push(Dialog.Create(
           "hello",
           "ni hao ya"
         ));

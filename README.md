@@ -10,5 +10,7 @@ TODO:
 [+]confirm dialog  
 [+]choose dialog  
 [+]dialog button  
+[+]text loop effect  
+[+]text typewrite  
 
 
