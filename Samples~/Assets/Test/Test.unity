@@ -197,6 +197,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4948264291383720643, guid: b4b07d9979f5d884ea33631d8f5aa682, type: 3}
+      propertyPath: showGlyphGrid
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4948264291383720644, guid: b4b07d9979f5d884ea33631d8f5aa682, type: 3}
       propertyPath: m_RootOrder
       value: 0

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace UnityTerminal
 {
-    public class Dialog : Panel
+    public class Dialog : Screen
     {
         public string title;
         public string message;
@@ -34,9 +34,9 @@ namespace UnityTerminal
                 terminal.Pop(this);
         }
 
-        public override void Render(Terminal terminal)
+        public override void Render()
         {
-            base.Render(terminal);
+            base.Render();
 
             terminal.Fill(sx, sy, terminal.width - sx * 2, terminal.height - sy * 2);
             TerminalUtils.DrawBox(terminal, sx, sy, boxColor);

@@ -13,5 +13,7 @@ TODO:
 [+]text loop effect  
 [+]text typewrite  
 [x]glyph back color  
+[+]panel  
+[+]terminal stetch fit  
 
 

@@ -12,13 +12,16 @@ namespace UnityTerminal
 
         public Glyph(char ch, Color? fore = null, Color? back = null)
         {
-            this.ch = ch;
-            this.fore = fore ?? Color.white;
-            this.back = back ?? Color.black;
+            Set(ch, fore, back);
         }
 
 
         public Glyph(int ch, Color? fore = null, Color? back = null)
+        {
+            Set(ch, fore, back);
+        }
+
+        public void Set(int ch, Color? fore = null, Color? back = null)
         {
             this.ch = ch;
             this.fore = fore ?? Color.white;

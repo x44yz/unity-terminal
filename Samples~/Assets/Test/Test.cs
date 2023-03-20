@@ -78,11 +78,14 @@ class MainScreen : Screen {
     }
   }
 
-  public override void Render(Terminal terminal) {
+  public override void Render() {
     // TerminalUtils.DrawBox(terminal, 2, 1, TerminalColor.green);
 
-    terminal.WriteAt(x, 2, "P", TerminalColor.lightGold, TerminalColor.blue);
-    terminal.WriteAt(0, 1, "å", TerminalColor.white, TerminalColor.blue);
+    WriteAt(x, 2, "P", TerminalColor.lightGold, TerminalColor.blue);
+    WriteAt(0, 1, "å", TerminalColor.white, TerminalColor.blue);
+
+    var p = AddPanel("t1", 7, 4, 10, 10);
+    p.WriteAt(0, 0, "1");
     // terminal.writeAt(7, 4, "å");
     // terminal.writeAt(0, 0, "Predefined colors:");
     // terminal.writeAt(59, 0, "switch terminal [tab]", ColorX.darkGray);
@@ -111,7 +114,7 @@ public class Test : MonoBehaviour
 
     public bool init = false;
     public RetroCanvas retroCanvas;
-    public RenderTerminal _terminal = null;
+    public RetroTerminal _terminal = null;
 
     void Init()
     {
@@ -125,10 +128,11 @@ public class Test : MonoBehaviour
         // ui.keyPress.bind("animate", Malison.KeyCode.space);
         // ui.keyPress.bind("profile", Malison.KeyCode.p);
 
-        gscale = UnityEngine.Screen.height * 1f / height / 13.0f;
+        // gscale = Mathf.Min(UnityEngine.Screen.height * 1f / height / 13.0f, UnityEngine.Screen.width * 1f / width / 9f);
 
         // updateTerminal();
-        _terminal = RetroTerminal.ShortDos(width, height, gscale, retroCanvas as RetroCanvas);
+        _terminal = RetroTerminal.ShortDos(width, height, UnityEngine.Screen.width, UnityEngine.Screen.height, retroCanvas as RetroCanvas);
+        gscale = _terminal.scale;
 
         // ui.push(new MainScreen());
         _terminal.Push(new MainScreen());
@@ -167,46 +171,4 @@ public class Test : MonoBehaviour
     public float pixelToUnits = 100.0f;
     public float gizmoPos = -7f;
     public float gscale = 1f;
-    private void OnDrawGizmos() {
-      if (!showDisplay)
-        return;
-
-      if (_terminal == null)
-        return;
-
-      if (retroCanvas == null)
-        return;
-
-      // if (MalisonUnity.Inst == null)
-      //   return;
-
-      // 600 / 1.2
-      // float pixelToUnits = Camera.main.ScreenToWorldPoint
-      float charWidth = (_terminal as RetroTerminal).charWidth;
-      float charHeight = (_terminal as RetroTerminal).charHeight;
-      // var scale = Mathf.Min(swidth / (ui._terminal.width * charWidth), sheight / (ui._terminal.height * charHeight));
-
-      charWidth *= gscale;
-      charHeight *= gscale;
-
-      var fx = offX - _terminal.width * charWidth * 0.5f;
-      var fy = _terminal.height * charHeight * 0.5f - offY;
-      var off = new Vector3(fx / pixelToUnits, fy / pixelToUnits, 0f);
-
-      Gizmos.color = displayColor;
-
-      for (int i = 0; i <= _terminal.width; ++i)
-      {
-          Vector3 bpos = retroCanvas.glyphsRoot.position + off + new Vector3(i * charWidth / pixelToUnits, 0 * charHeight/ pixelToUnits, gizmoPos);
-          Vector3 epos = retroCanvas.glyphsRoot.position + off + new Vector3(i * charWidth/ pixelToUnits, -_terminal.height * charHeight/ pixelToUnits, gizmoPos);
-          Gizmos.DrawLine(bpos, epos);
-      }
-
-      for (int j = 0; j <= _terminal.height; ++j)
-      {
-          Vector3 bpos = retroCanvas.glyphsRoot.position + off + new Vector3(0 * charWidth/ pixelToUnits, -j * charHeight/ pixelToUnits, gizmoPos);
-          Vector3 epos = retroCanvas.glyphsRoot.position + off + new Vector3(_terminal.width * charWidth/ pixelToUnits, -j * charHeight/ pixelToUnits, gizmoPos);
-          Gizmos.DrawLine(bpos, epos);
-      }
-    }
 }

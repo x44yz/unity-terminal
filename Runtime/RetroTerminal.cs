@@ -201,22 +201,23 @@ namespace UnityTerminal
         public Color foreColor;
 
         public static RetroTerminal Dos(int width, int height,
-                float scale, RetroCanvas canvas)
+                int displayWidthPixels, int displayHeightPixels, RetroCanvas canvas)
         {
             return new RetroTerminal("dos", width, height,
-                9, 16, scale, canvas, CharCode.space, Color.white);
+                9, 16, displayWidthPixels, displayHeightPixels, canvas, CharCode.space, Color.white);
         }
 
         public static RetroTerminal ShortDos(int width, int height, 
-                float scale, RetroCanvas canvas)
+                int displayWidthPixels, int displayHeightPixels, RetroCanvas canvas)
         {
             return new RetroTerminal("dos-short", width, height,
-                9, 13, scale, canvas, CharCode.space, Color.white);
+                9, 13, displayWidthPixels, displayHeightPixels, canvas, CharCode.space, Color.white);
         }
 
         RetroTerminal(string resName, int width, int height, 
             int charWidth, int charHeight,
-            float scale, RetroCanvas canvas, 
+            int displayWidthPixels, int displayHeightPixels,
+            RetroCanvas canvas, 
             int clearCode, Color foreColor)
         {
             this.width = width;
@@ -226,7 +227,8 @@ namespace UnityTerminal
 
             this.charWidth = charWidth;
             this.charHeight = charHeight;
-            this.scale = scale;
+            this.scale = Mathf.Min(displayHeightPixels * 1f / height / charHeight, 
+                            displayWidthPixels * 1f / width / charWidth);
 
             this.canvas = canvas;
             this.canvas.Init(this, resName, Code2SpriteIdx);
@@ -277,9 +279,7 @@ namespace UnityTerminal
             if (gh != null && gh.isEqual(chr, fore, back) == false)
             {
                 // Debug.Log($"xx-- set 1 > {x}, {y} " + glyph._char);
-                gh.ch = chr;
-                gh.fore = fore.Value;
-                gh.back = back.Value;
+                gh.Set(chr, fore, back);
                 // Debug.Log($"xx-- set > {x},{y},{chr}");
             }
         }

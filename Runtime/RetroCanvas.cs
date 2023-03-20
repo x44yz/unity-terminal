@@ -12,6 +12,8 @@ namespace UnityTerminal
         public Transform glyphsRoot;
         public float pixelToUnits = 100; // default
         public Sprite glyphBackSpr;
+        public bool showGlyphGrid;
+        public Color glyphGridColor = Color.red;
 
         [Header("RUNTIME")]
         public RetroTerminal terminal;
@@ -101,6 +103,39 @@ namespace UnityTerminal
             gr.SetForeSprite(foreSpr, foreColor);
             gr.SetBackSprite(glyphBackSpr, backColor);
         }
+
+#if UNITY_EDITOR
+        private void OnDrawGizmos()
+        {
+            if (!showGlyphGrid)
+                return;
+
+            if (terminal == null)
+                return;
+
+            float charWidth = terminal.charWidth * terminal.scale;
+            float charHeight = terminal.charHeight * terminal.scale;
+
+            var fx =  -terminal.width * charWidth * 0.5f;
+            var fy = terminal.height * charHeight * 0.5f;
+            var off = new Vector3(fx / pixelToUnits, fy / pixelToUnits, 0f);
+
+            Gizmos.color = glyphGridColor;
+            for (int i = 0; i <= terminal.width; ++i)
+            {
+                Vector3 bpos = glyphsRoot.position + off + new Vector3(i * charWidth/pixelToUnits, 0 * charHeight/pixelToUnits, -1);
+                Vector3 epos = glyphsRoot.position + off + new Vector3(i * charWidth/pixelToUnits, -terminal.height * charHeight/pixelToUnits, -1);
+                Gizmos.DrawLine(bpos, epos);
+            }
+
+            for (int j = 0; j <= terminal.height; ++j)
+            {
+                Vector3 bpos = glyphsRoot.position + off + new Vector3(0 * charWidth/pixelToUnits, -j * charHeight/pixelToUnits, -1);
+                Vector3 epos = glyphsRoot.position + off + new Vector3(terminal.width * charWidth/pixelToUnits, -j * charHeight/pixelToUnits, -1);
+                Gizmos.DrawLine(bpos, epos);
+            }
+        }
+#endif
     }
 }
 
