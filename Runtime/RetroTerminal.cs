@@ -279,8 +279,8 @@ namespace UnityTerminal
             {
                 // Debug.Log($"xx-- set 1 > {x}, {y} " + glyph._char);
                 gh.ch = chr;
-                gh.fore = fore;
-                gh.back = back;
+                gh.fore = fore.Value;
+                gh.back = back.Value;
                 // Debug.Log($"xx-- set > {x},{y},{chr}");
             }
         }
