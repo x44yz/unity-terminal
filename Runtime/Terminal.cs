@@ -41,8 +41,10 @@ namespace UnityTerminal
         public abstract void Tick(float dt);
 
         // RetorTerminal
-        public virtual void WriteAt(int x, int y, string text, Color? fore = null) {}
-        public virtual void WriteAt(int x, int y, int charCode, Color? fore = null) {}
+        public virtual void WriteAt(int x, int y, string text, 
+                                Color? fore = null, Color? back = null) {}
+        public virtual void WriteAt(int x, int y, int charCode, 
+                                Color? fore = null, Color? back = null) {}
     }
 }
 

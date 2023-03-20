@@ -11,6 +11,7 @@ namespace UnityTerminal
         public SpriteRenderer bg;
         public Transform glyphsRoot;
         public float pixelToUnits = 100; // default
+        public Sprite glyphBackSpr;
 
         [Header("RUNTIME")]
         public RetroTerminal terminal;
@@ -45,32 +46,37 @@ namespace UnityTerminal
                 
                     if (glyph == null /*|| glyph.ch == CharCode.space*/)
                     {
-                        this.Set(x, y, null, Color.white);
+                        this.Set(x, y, null, Color.white, null);
                     }
                     else
                     {
                         // Debug.Log($"xx-- render > {x}, {y}, {glyph.ch}");
-
-                        int sprIdx = glyph.ch;
-                        if (char2SpriteIndexs.ContainsKey(glyph.ch))
-                        {
-                            sprIdx = char2SpriteIndexs[glyph.ch];
-                        }
-
-                        if (sprIdx < 0 || sprIdx >= sprites.Length)
-                        {
-                            Debug.LogError("not support glyph > " + glyph.ch);
-                            return;
-                        }
-
+                        var foreSpr = GetSprite(glyph.ch);
+    
                         // _display.setGlyph(x, y, glyph);
-                        this.Set(x, y, sprites[sprIdx], glyph.fore);
+                        this.Set(x, y, foreSpr, glyph.fore, glyph.back);
                     }
                 }
             }
         }
 
-        public void Set(int x, int y, Sprite spr, Color foreColor)
+        private Sprite GetSprite(int ch)
+        {
+            int sprIdx = ch;
+            if (char2SpriteIndexs.ContainsKey(ch))
+            {
+                sprIdx = char2SpriteIndexs[ch];
+            }
+
+            if (sprIdx < 0 || sprIdx >= sprites.Length)
+            {
+                Debug.LogError("not support glyph > " + ch);
+                return null;
+            }
+            return sprites[sprIdx];
+        }
+
+        public void Set(int x, int y, Sprite foreSpr, Color? foreColor, Color? backColor)
         {
             var rt = terminal as RetroTerminal;
             if (rt == null)
@@ -92,8 +98,8 @@ namespace UnityTerminal
                     0f);
                 gr.transform.localScale = Vector3.one * rt.scale;
             }
-            gr.SetSprite(spr);
-            gr.SetColor(foreColor);
+            gr.SetForeSprite(foreSpr, foreColor);
+            gr.SetBackSprite(glyphBackSpr, backColor);
         }
     }
 }

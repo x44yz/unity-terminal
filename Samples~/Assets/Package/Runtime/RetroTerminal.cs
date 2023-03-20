@@ -236,7 +236,8 @@ namespace UnityTerminal
             glyphs.Fill(()=>{ return new Glyph(clearCode, foreColor); });
         }
 
-        public override void WriteAt(int x, int y, string text, Color? fore = null)
+        public override void WriteAt(int x, int y, string text, 
+                                Color? fore = null, Color? back = null)
         {
             if (CheckBounds(x, y, true) == false)
                 return;
@@ -246,17 +247,18 @@ namespace UnityTerminal
             for (var i = 0; i < text.Length; i++)
             {
                 if (x + i >= width) break;
-                drawGlyph(x + i, y, text[i], fore);
+                DrawGlyph(x + i, y, text[i], fore, back);
             }
         }
 
-        public override void WriteAt(int x, int y, int charCode, Color? fore = null)
+        public override void WriteAt(int x, int y, int charCode, 
+                                Color? fore = null, Color? back = null)
         {
             if (CheckBounds(x, y, true) == false)
                 return;
 
             fore ??= foreColor;
-            drawGlyph(x, y, charCode, fore);
+            DrawGlyph(x, y, charCode, fore, back);
         }
 
         public void clearGlyph(int x, int y)
@@ -267,16 +269,18 @@ namespace UnityTerminal
             glyphs.Get(x, y).ch = clearCode;
         }
 
-        public void drawGlyph(int x, int y, int chr, Color? fore = null, Color? back = null)
+        public void DrawGlyph(int x, int y, int chr, Color? fore = null, Color? back = null)
         {
             if (CheckBounds(x, y) == false)
                 return;
 
-            if (glyphs.Get(x, y).isEqual(chr, fore.Value) == false)
+            var gh = glyphs.Get(x, y);
+            if (gh != null && gh.isEqual(chr, fore, back) == false)
             {
                 // Debug.Log($"xx-- set 1 > {x}, {y} " + glyph._char);
-                glyphs.Get(x, y).ch = chr;
-                glyphs.Get(x, y).fore = fore.Value;
+                gh.ch = chr;
+                gh.fore = fore;
+                gh.back = back;
                 // Debug.Log($"xx-- set > {x},{y},{chr}");
             }
         }

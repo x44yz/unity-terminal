@@ -86,8 +86,8 @@ class MainScreen : Screen {
   public override void Render(Terminal terminal) {
     // TerminalUtils.DrawBox(terminal, 2, 1, TerminalColor.green);
 
-    terminal.WriteAt(x, 2, "P", TerminalColor.lightGold);
-    terminal.WriteAt(0, 1, "å");
+    terminal.WriteAt(x, 2, "P", TerminalColor.lightGold, TerminalColor.blue);
+    terminal.WriteAt(0, 1, "å", TerminalColor.white, TerminalColor.blue);
     // terminal.writeAt(7, 4, "å");
     // terminal.writeAt(0, 0, "Predefined colors:");
     // terminal.writeAt(59, 0, "switch terminal [tab]", ColorX.darkGray);
@@ -137,10 +137,10 @@ public class Test : MonoBehaviour
 
         // ui.push(new MainScreen());
         _terminal.Push(new MainScreen());
-        _terminal.Push(Dialog.Create(
-          "hello",
-          "ni hao ya"
-        ));
+        // _terminal.Push(Dialog.Create(
+        //   "hello",
+        //   "ni hao ya"
+        // ));
 
         // ui.handlingInput = true;
         // ui.running = true;

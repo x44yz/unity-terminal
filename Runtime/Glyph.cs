@@ -7,31 +7,36 @@ namespace UnityTerminal
     public class Glyph
     {
         public int ch;
-        public Color fore;
+        public Color? fore;
+        public Color? back;
 
-        public Glyph(char ch, Color? fore = null)
+        public Glyph(char ch, Color? fore = null, Color? back = null)
         {
             this.ch = ch;
-            this.fore = fore != null ? fore.Value : Color.white;
+            this.fore = fore;
+            this.back = back;
         }
 
 
-        public Glyph(int ch, Color? fore = null)
+        public Glyph(int ch, Color? fore = null, Color? back = null)
         {
             this.ch = ch;
-            this.fore = fore != null ? fore.Value : Color.white;
+            this.fore = fore;
+            this.back = back;
         }
 
-        public bool isEqual(int ch, Color fore)
+        public bool isEqual(int ch, Color? fore, Color? back)
         {
-            return this.ch == ch && this.fore.Equals(fore);
+            return this.ch == ch && 
+                this.fore == fore &&
+                this.back == back;
         }
 
         public bool isEqual(Glyph other)
         {
             if (other == null)
                 return false;
-            return isEqual(other.ch, other.fore);
+            return isEqual(other.ch, other.fore, other.back);
         }
     }
 }
