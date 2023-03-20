@@ -265,6 +265,9 @@ namespace UnityTerminal
         public override void WriteAt(Panel rt, int x, int y, string text, 
                                 Color? fore = null, Color? back = null) 
         {
+            if (rt.y + y >= rt.y + rt.h)
+                return;
+
             for (var i = 0; i < text.Length; i++)
             {
                 if (rt.x + x + i >= width ||
@@ -275,6 +278,9 @@ namespace UnityTerminal
         public override void WriteAt(Panel rt, int x, int y, int charCode, 
                                 Color? fore = null, Color? back = null)
         {
+            if (rt.x + x >= rt.x + rt.w ||
+                rt.y + y >= rt.y + rt.h)
+                return;
             WriteAt(rt.x + x, rt.y + y, charCode, fore, back);
         }
 

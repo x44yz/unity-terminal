@@ -71,6 +71,27 @@ namespace UnityTerminal
                 "┌", "─", "┐", "│", "└", "─", "┘");
         }
 
+        public static void DrawBox(Terminal terminal, Panel p, int x, int y, Color? color = null)
+        {
+            DrawBox(terminal, p, x, y, p.w - (p.x + x) * 2, p.h - (p.y + y) * 2, color);
+        }
+
+        public static void DrawBox(Terminal terminal, Panel p, int x, int y, 
+            int width, int height, Color? color = null)
+        {
+            DrawBox(terminal, p.x + x, p.y + y, width, height, color);
+        }
+
+        public static void DrawFrame(Terminal terminal, int x, int y, Color? color = null)
+        {
+            DrawFrame(terminal, x, y, terminal.width - x * 2, terminal.height - y * 2, color);
+        }
+
+        public static void DrawFrame(Terminal terminal, int x, int y, int width, int height, Color? color = null)
+        {
+            DrawBox(terminal, x, y, width, height, color, "╒", "═", "╕", "│", "└", "─", "┘");
+        }
+
         public static void DrawBox(Terminal terminal, int x, int y,
             int width, int height, Color? color,
             string topLeft,

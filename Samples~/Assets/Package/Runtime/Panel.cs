@@ -19,6 +19,14 @@ namespace UnityTerminal
             this.h = h;
         }
 
+        public Panel(Panel parent, int x, int y, int w, int h)
+        {
+            this.x = parent.x + x;
+            this.y = parent.y + y;
+            this.w = Mathf.Min(parent.w, w);
+            this.h = Mathf.Min(parent.h, h);
+        }
+
         // public void Init(Screen s, int x, int y, int width, int height)
         // {
         //     parent = s;
