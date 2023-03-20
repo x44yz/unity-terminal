@@ -9,12 +9,7 @@ class PlayerInfoPanel : Panel {
 }
 
 class HudPanel : Panel {
-    public override void OnBind()
-    {
-        base.OnBind();
 
-        
-    }
 }
 
 class MainScreen : Screen {

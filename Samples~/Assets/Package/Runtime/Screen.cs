@@ -40,7 +40,7 @@ namespace UnityTerminal
         /// Called when the screen above this one ([popped]) has been popped and this
         /// screen is now the top-most screen. If a value was passed to [pop()], it
         /// will be passed to this as [result].
-        public virtual void Activate(Screen popped, object result) { }
+        public virtual void Active(Screen popped, object result = null) { }
         public virtual void UnActive(Screen last) { }
         public virtual void Tick(float dt) { }
         public virtual void HandleInput() { }
@@ -48,7 +48,5 @@ namespace UnityTerminal
         /// Called when the [UserInterface] has been bound to a new terminal with a
         /// different size while this [Screen] is present.
         public virtual void Resize(int width, int height) { }
-        public virtual void OnBind() { }
-        public virtual void OnUnBind() { }
     }
 }

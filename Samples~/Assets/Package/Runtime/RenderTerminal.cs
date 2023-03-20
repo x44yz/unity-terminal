@@ -28,7 +28,7 @@ namespace UnityTerminal
             var screen = screens[screens.Count - 1];
             screens.RemoveAt(screens.Count - 1);
             screen.Unbind();
-            screens[screens.Count - 1].Activate(screen, result);
+            screens[screens.Count - 1].Active(screen, result);
             _Render();
         }
 
