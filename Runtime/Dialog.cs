@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace UnityTerminal
 {
-    public class Dialog : Screen
+    public class Dialog : Panel
     {
         public string title;
         public string message;

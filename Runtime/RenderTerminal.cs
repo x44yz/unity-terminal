@@ -14,6 +14,11 @@ namespace UnityTerminal
         public void Push(Screen screen)
         {
             screen.Bind(this);
+            if (screens.Count > 0)
+            {
+                var curTopScreen = screens[screens.Count - 1];
+                curTopScreen.UnActive(screen);
+            }
             screens.Add(screen);
             _Render();
         }
