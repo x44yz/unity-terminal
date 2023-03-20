@@ -4,13 +4,6 @@ using UnityEngine;
 using UnityTerminal;
 using Screen = UnityTerminal.Screen;
 
-class PlayerInfoPanel : Panel {
-
-}
-
-class HudPanel : Panel {
-
-}
 
 class MainScreen : Screen {
   // public List<Ball> balls = new List<Ball>();
@@ -81,11 +74,11 @@ class MainScreen : Screen {
   public override void Render() {
     // TerminalUtils.DrawBox(terminal, 2, 1, TerminalColor.green);
 
-    WriteAt(x, 2, "P", TerminalColor.lightGold, TerminalColor.blue);
-    WriteAt(0, 1, "å", TerminalColor.white, TerminalColor.blue);
+    terminal.WriteAt(x, 2, "P", TerminalColor.lightGold, TerminalColor.blue);
+    terminal.WriteAt(0, 1, "å", TerminalColor.white, TerminalColor.blue);
 
-    var p = AddPanel("t1", 7, 4, 10, 10);
-    p.WriteAt(0, 0, "1");
+    var p = new Panel(7, 4, 10, 10);
+    terminal.WriteAt(p, 0, 0, "1");
     // terminal.writeAt(7, 4, "å");
     // terminal.writeAt(0, 0, "Predefined colors:");
     // terminal.writeAt(59, 0, "switch terminal [tab]", ColorX.darkGray);

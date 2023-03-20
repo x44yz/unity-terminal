@@ -45,6 +45,10 @@ namespace UnityTerminal
                                 Color? fore = null, Color? back = null) {}
         public virtual void WriteAt(int x, int y, int charCode, 
                                 Color? fore = null, Color? back = null) {}
+        public virtual void WriteAt(Panel rt, int x, int y, string text, 
+                                Color? fore = null, Color? back = null) {}
+        public virtual void WriteAt(Panel rt, int x, int y, int charCode, 
+                                Color? fore = null, Color? back = null) {}
     }
 }
 

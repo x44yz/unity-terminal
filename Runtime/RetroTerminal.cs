@@ -262,6 +262,22 @@ namespace UnityTerminal
             DrawGlyph(x, y, charCode, fore, back);
         }
 
+        public override void WriteAt(Panel rt, int x, int y, string text, 
+                                Color? fore = null, Color? back = null) 
+        {
+            for (var i = 0; i < text.Length; i++)
+            {
+                if (rt.x + x + i >= width ||
+                    rt.x + x + i >= rt.x + rt.w) break;
+                WriteAt(rt.x + x + i, rt.y + y, text[i], fore, back);
+            }
+        }
+        public override void WriteAt(Panel rt, int x, int y, int charCode, 
+                                Color? fore = null, Color? back = null)
+        {
+            WriteAt(rt.x + x, rt.y + y, charCode, fore, back);
+        }
+
         public void clearGlyph(int x, int y)
         {
             if (CheckBounds(x, y) == false)
