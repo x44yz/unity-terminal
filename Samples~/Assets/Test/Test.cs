@@ -91,77 +91,30 @@ public class Test : MonoBehaviour
 {
     public int width = 80;
     public int height = 45;
-    public float offX = 0f;
-    public float offY = 0f;
+    public RetroCanvas retroCanvas;
 
-    // public UserInterface ui = new UserInterface();
+    [Header("RUNTIME")]
+    public RetroTerminal retroTerminal = null;
 
-    /// Index of the current terminal in [terminals].
-    int terminalIndex = 1;
-
-    // Start is called before the first frame update
     void Start()
     {
+        retroTerminal = RetroTerminal.ShortDos(width, height, UnityEngine.Screen.width, UnityEngine.Screen.height, retroCanvas);
 
-    }
-
-    public bool init = false;
-    public RetroCanvas retroCanvas;
-    public RetroTerminal _terminal = null;
-
-    void Init()
-    {
-        if (init /*|| MalisonUnity.Inst == null*/)
-            return;
-        init = true;
-
-             // Set up the keybindings.
-        // ui.keyPress.bind("next terminal", Malison.KeyCode.tab);
-        // ui.keyPress.bind("prev terminal", Malison.KeyCode.tab, shift: true);
-        // ui.keyPress.bind("animate", Malison.KeyCode.space);
-        // ui.keyPress.bind("profile", Malison.KeyCode.p);
-
-        // gscale = Mathf.Min(UnityEngine.Screen.height * 1f / height / 13.0f, UnityEngine.Screen.width * 1f / width / 9f);
-
-        // updateTerminal();
-        _terminal = RetroTerminal.ShortDos(width, height, UnityEngine.Screen.width, UnityEngine.Screen.height, retroCanvas as RetroCanvas);
-        gscale = _terminal.scale;
-
-        // ui.push(new MainScreen());
-        _terminal.Push(new MainScreen());
+        retroTerminal.Push(new MainScreen());
         // _terminal.Push(Dialog.Create(
         //   "hello",
         //   "ni hao ya"
         // ));
 
-        // ui.handlingInput = true;
-        // ui.running = true;
-        _terminal.running = true;
+        retroTerminal.running = true;
 
-        
-        Camera.main.orthographicSize = UnityEngine.Screen.height / pixelToUnits / 2;
+        Camera.main.orthographicSize = UnityEngine.Screen.height / retroCanvas.pixelToUnits / 2;
     }
 
-    // void updateTerminal() {
-    //     // html.document.body!.children.clear();
-    //     ui.setTerminal((RenderTerminal)terminals(terminalIndex));
-    // }
 
-    // Update is called once per frame
     void Update()
     {
-        if (!init)
-            Init();
-
-        if (_terminal != null)
-            _terminal.Tick(Time.deltaTime);
+        if (retroTerminal != null)
+            retroTerminal.Tick(Time.deltaTime);
     }
-
-    public float swidth;
-    public float sheight;
-    public bool showDisplay = false;
-    public UnityEngine.Color displayColor;
-    public float pixelToUnits = 100.0f;
-    public float gizmoPos = -7f;
-    public float gscale = 1f;
 }
