@@ -58,7 +58,7 @@ class MainScreen : Screen {
     Dirty();
   }
 
-  public override void HandleInput()
+  public override bool HandleInput()
   {
     // check input
     if (Input.GetKeyDown(KeyCode.Space))
@@ -68,7 +68,9 @@ class MainScreen : Screen {
       //     "hello",
       //     "ni hao ya"
       //   ));
+      return true;
     }
+    return false;
   }
 
   public override void Render() {

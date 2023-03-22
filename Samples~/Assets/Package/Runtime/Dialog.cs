@@ -27,12 +27,14 @@ namespace UnityTerminal
             return dialog;
         }
 
-        public override void HandleInput()
+        public override bool HandleInput()
         {
             base.HandleInput();
 
             if (Input.GetKeyDown(KeyCode.Space))
                 terminal.Pop(this);
+
+            return false;
         }
 
         public override void Render()
