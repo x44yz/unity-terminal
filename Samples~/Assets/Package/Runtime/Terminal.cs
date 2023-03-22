@@ -15,6 +15,16 @@ namespace UnityTerminal
             Fill(0, 0, width, height);
         }
 
+        public virtual void Clear(Panel p)
+        {
+            Clear(p.x, p.y, p.w, p.h);
+        }
+
+        public virtual void Clear(int x, int y, int w, int h)
+        {
+            Fill(x, y, w, h);
+        }
+
         public void Fill(int x, int y, int width, int height, Color? color = null)
         {
             color ??= backColor;
@@ -39,6 +49,11 @@ namespace UnityTerminal
         }
 
         public abstract void Tick(float dt);
+
+        public Panel Rect(int x, int y, int w, int h)
+        {
+            return new Panel(x, y, w, h);
+        }
 
         // RetorTerminal
         public virtual void WriteAt(int x, int y, string text, 

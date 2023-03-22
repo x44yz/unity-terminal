@@ -32,7 +32,7 @@ namespace UnityTerminal
             _Render();
         }
 
-        void GoTo(Screen screen)
+        public void GoTo(Screen screen)
         {
             var old = screens[screens.Count - 1];
             screens.RemoveAt(screens.Count - 1);

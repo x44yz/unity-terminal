@@ -55,6 +55,9 @@ namespace UnityTerminal
         public static Color darkBrown = Rgba255(100, 64, 32);
     
         public static Color darkCoolGray = Rgba255(0x26, 0x2a, 0x42);
+
+        public static Color lightWarmGray = Rgba255(0x84, 0x7e, 0x87);
+        public static Color ash = Rgba255(0xe2, 0xdf, 0xf0);
     }
 
     public static class TerminalUtils
@@ -147,6 +150,65 @@ namespace UnityTerminal
                     terminal.WriteAt(x + i, y, top, color);
                     terminal.WriteAt(x + i, y + height - 1, bottom, color);
                 }
+            }
+        }
+
+        public static void DrawHelpKeys(Terminal terminal, 
+                Dictionary<string, string> helpKeys,
+                string query = null, Color? queryBoxColor = null,
+                Color? queryTextColor = null, Color? keyColor = null,
+                Color? textColor = null, Color? symbolColor = null)
+        {
+            queryBoxColor ??= TerminalColor.lightWarmGray;
+            queryTextColor ??= TerminalColor.ash;
+            keyColor ??= TerminalColor.gold;
+            textColor ??= TerminalColor.lightWarmGray;
+            symbolColor ??= TerminalColor.darkCoolGray;
+
+            // Draw the help.
+            var helpTextLength = 0;
+            foreach (var kv in helpKeys) {
+                var key = kv.Key;
+                var text = kv.Value;
+                if (helpTextLength > 0)
+                    helpTextLength += 2;
+                helpTextLength += key.Length + text.Length + 3;
+            }
+
+            var x = (terminal.width - helpTextLength) / 2;
+
+            // Show the query string, if there is one.
+            if (query != null) {
+                DrawBox(terminal, x - 2, terminal.height - 4, helpTextLength + 4, 5,
+                    queryBoxColor);
+                terminal.WriteAt((terminal.width - query.Length) / 2,
+                    terminal.height - 3, query, queryTextColor);
+                } else {
+                DrawBox(terminal, x - 2, terminal.height - 2, helpTextLength + 4, 3,
+                    queryBoxColor);
+            }
+
+            var first = true;
+            foreach (var kv in helpKeys) {
+                var key = kv.Key;
+                var text = kv.Value;
+
+                if (!first) {
+                    terminal.WriteAt(x, terminal.height - 1, ", ", symbolColor);
+                    x += 2;
+                }
+
+                terminal.WriteAt(x, terminal.height - 1, "[", symbolColor);
+                x++;
+                terminal.WriteAt(x, terminal.height - 1, key, keyColor);
+                x += key.Length;
+                terminal.WriteAt(x, terminal.height - 1, "] ", symbolColor);
+                x += 2;
+
+                terminal.WriteAt(x, terminal.height - 1, text, textColor);
+                x += text.Length;
+
+                first = false;
             }
         }
     }

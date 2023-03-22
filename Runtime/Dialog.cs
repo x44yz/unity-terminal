@@ -16,13 +16,14 @@ namespace UnityTerminal
         public int msgPaddingX = 0;
         public int msgPaddingY = 1;
 
+        public override bool isTransparent => true;
+
         public static Dialog Create(string title,
             string msg)
         {
             var dialog = new Dialog();
             dialog.title = title;
             dialog.message = msg;
-            dialog.isTransparent = true;
             return dialog;
         }
 

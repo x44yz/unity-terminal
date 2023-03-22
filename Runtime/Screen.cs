@@ -12,7 +12,7 @@ namespace UnityTerminal
         bool isBind => terminal != null;
 
         /// Whether this screen allows any screens under it to be visible.
-        public bool isTransparent = false;
+        public virtual bool isTransparent => false;
 
         public void Bind(RenderTerminal tel)
         {
