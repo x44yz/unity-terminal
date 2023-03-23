@@ -243,12 +243,10 @@ namespace UnityTerminal
             if (CheckBounds(x, y, true) == false)
                 return;
 
-            fore ??= foreColor;
-
             for (var i = 0; i < text.Length; i++)
             {
                 if (x + i >= width) break;
-                DrawGlyph(x + i, y, text[i], fore, back);
+                WriteAt(x + i, y, text[i], fore, back);
             }
         }
 
@@ -262,27 +260,27 @@ namespace UnityTerminal
             DrawGlyph(x, y, charCode, fore, back);
         }
 
-        public override void WriteAt(Panel rt, int x, int y, string text, 
-                                Color? fore = null, Color? back = null) 
-        {
-            if (rt.y + y >= rt.y + rt.h)
-                return;
+        // public override void WriteAt(Panel rt, int x, int y, string text, 
+        //                         Color? fore = null, Color? back = null) 
+        // {
+        //     if (rt.y + y >= rt.y + rt.h)
+        //         return;
 
-            for (var i = 0; i < text.Length; i++)
-            {
-                if (rt.x + x + i >= width ||
-                    rt.x + x + i >= rt.x + rt.w) break;
-                WriteAt(rt.x + x + i, rt.y + y, text[i], fore, back);
-            }
-        }
-        public override void WriteAt(Panel rt, int x, int y, int charCode, 
-                                Color? fore = null, Color? back = null)
-        {
-            if (rt.x + x >= rt.x + rt.w ||
-                rt.y + y >= rt.y + rt.h)
-                return;
-            WriteAt(rt.x + x, rt.y + y, charCode, fore, back);
-        }
+        //     for (var i = 0; i < text.Length; i++)
+        //     {
+        //         if (rt.x + x + i >= width ||
+        //             rt.x + x + i >= rt.x + rt.w) break;
+        //         WriteAt(rt.x + x + i, rt.y + y, text[i], fore, back);
+        //     }
+        // }
+        // public override void WriteAt(Panel rt, int x, int y, int charCode, 
+        //                         Color? fore = null, Color? back = null)
+        // {
+        //     if (rt.x + x >= rt.x + rt.w ||
+        //         rt.y + y >= rt.y + rt.h)
+        //         return;
+        //     WriteAt(rt.x + x, rt.y + y, charCode, fore, back);
+        // }
 
         public void clearGlyph(int x, int y)
         {

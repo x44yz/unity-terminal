@@ -88,8 +88,8 @@ class MainScreen : Screen {
     terminal.WriteAt(x, 2, "P", TerminalColor.lightGold, TerminalColor.blue);
     terminal.WriteAt(0, 1, "å", TerminalColor.white, TerminalColor.blue);
 
-    var p = new Panel(7, 4, 10, 10);
-    terminal.WriteAt(p, 0, 0, "1");
+    var t = terminal.Rect(7, 4, 10, 10);
+    t.WriteAt(0, 0, "1");
     // terminal.writeAt(7, 4, "å");
     // terminal.writeAt(0, 0, "Predefined colors:");
     // terminal.writeAt(59, 0, "switch terminal [tab]", ColorX.darkGray);

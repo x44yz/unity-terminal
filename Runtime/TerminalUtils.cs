@@ -74,16 +74,16 @@ namespace UnityTerminal
                 "┌", "─", "┐", "│", "└", "─", "┘");
         }
 
-        public static void DrawBox(Terminal terminal, Panel p, int x, int y, Color? color = null)
-        {
-            DrawBox(terminal, p, x, y, p.w - x * 2, p.h - y * 2, color);
-        }
+        // public static void DrawBox(Terminal terminal, Panel p, int x, int y, Color? color = null)
+        // {
+        //     DrawBox(terminal, p, x, y, p.w - x * 2, p.h - y * 2, color);
+        // }
 
-        public static void DrawBox(Terminal terminal, Panel p, int x, int y, 
-            int width, int height, Color? color = null)
-        {
-            DrawBox(terminal, p.x + x, p.y + y, width, height, color);
-        }
+        // public static void DrawBox(Terminal terminal, Panel p, int x, int y, 
+        //     int width, int height, Color? color = null)
+        // {
+        //     DrawBox(terminal, p.x + x, p.y + y, width, height, color);
+        // }
 
         public static void DrawFrame(Terminal terminal, int x, int y, 
             Color? color = null)
@@ -99,19 +99,19 @@ namespace UnityTerminal
                 "╒", "═", "╕", "│", "└", "─", "┘");
         }
 
-        public static void DrawFrame(Terminal terminal, Panel p, int x, 
-            int y, Color? color = null)
-        {
-            DrawFrame(terminal, p, x, y, p.w - x * 2, 
-                p.h - y * 2, color);
-        }
+        // public static void DrawFrame(Terminal terminal, Panel p, int x, 
+        //     int y, Color? color = null)
+        // {
+        //     DrawFrame(terminal, p, x, y, p.w - x * 2, 
+        //         p.h - y * 2, color);
+        // }
 
-        public static void DrawFrame(Terminal terminal, Panel p, int x, 
-            int y, int width, int height, Color? color = null)
-        {
-            DrawBox(terminal, p.x + x, p.y + y, width, height, color, 
-                "╒", "═", "╕", "│", "└", "─", "┘");
-        }
+        // public static void DrawFrame(Terminal terminal, Panel p, int x, 
+        //     int y, int width, int height, Color? color = null)
+        // {
+        //     DrawBox(terminal, p.x + x, p.y + y, width, height, color, 
+        //         "╒", "═", "╕", "│", "└", "─", "┘");
+        // }
 
         public static void DrawBox(Terminal terminal, int x, int y,
             int width, int height, Color? color,

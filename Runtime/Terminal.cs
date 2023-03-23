@@ -15,10 +15,10 @@ namespace UnityTerminal
             Fill(0, 0, width, height);
         }
 
-        public virtual void Clear(Panel p)
-        {
-            Clear(p.x, p.y, p.w, p.h);
-        }
+        // public virtual void Clear(Panel p)
+        // {
+        //     Clear(p.x, p.y, p.w, p.h);
+        // }
 
         public virtual void Clear(int x, int y, int w, int h)
         {
@@ -48,11 +48,11 @@ namespace UnityTerminal
             return true;
         }
 
-        public abstract void Tick(float dt);
+        public virtual void Tick(float dt) {}
 
-        public Panel Rect(int x, int y, int w, int h)
+        public virtual Terminal Rect(int x, int y, int w, int h)
         {
-            return new Panel(x, y, w, h);
+            return new PortTerminal(x, y, w, h, this);
         }
 
         // RetorTerminal
@@ -60,10 +60,10 @@ namespace UnityTerminal
                                 Color? fore = null, Color? back = null) {}
         public virtual void WriteAt(int x, int y, int charCode, 
                                 Color? fore = null, Color? back = null) {}
-        public virtual void WriteAt(Panel rt, int x, int y, string text, 
-                                Color? fore = null, Color? back = null) {}
-        public virtual void WriteAt(Panel rt, int x, int y, int charCode, 
-                                Color? fore = null, Color? back = null) {}
+        // public virtual void WriteAt(Panel rt, int x, int y, string text, 
+        //                         Color? fore = null, Color? back = null) {}
+        // public virtual void WriteAt(Panel rt, int x, int y, int charCode, 
+        //                         Color? fore = null, Color? back = null) {}
         public void WriteAt(int x, int y, Glyph glyph)
         {
             WriteAt(x, y, glyph.ch, glyph.fore, glyph.back);
