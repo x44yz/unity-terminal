@@ -58,20 +58,29 @@ class MainScreen : Screen {
     Dirty();
   }
 
-  public override bool HandleInput()
-  {
-    // check input
-    if (Input.GetKeyDown(KeyCode.Space))
+    public override bool KeyDown(KeyCode keyCode, bool shift, bool alt)
     {
-      Debug.Log("space button down");
-      // terminal.push(ConfirmDialog.Create(
-      //     "hello",
-      //     "ni hao ya"
-      //   ));
-      return true;
+      base.KeyDown(keyCode, shift, alt);
+
+      Debug.Log("xx-- key down > " + keyCode);
+
+      if (keyCode == KeyCode.Space)
+      {
+        // Debug.Log("space button down");
+        // terminal.push(ConfirmDialog.Create(
+        //     "hello",
+        //     "ni hao ya"
+        //   ));
+        return true;
+      }
+      return false;
     }
-    return false;
-  }
+
+    public override bool KeyUp(KeyCode keyCode, bool shift, bool alt)
+    {
+      Debug.Log("xx-- key up > " + keyCode);
+      return false;
+    }
 
   public override void Render() {
     // TerminalUtils.DrawBox(terminal, 2, 1, TerminalColor.green);

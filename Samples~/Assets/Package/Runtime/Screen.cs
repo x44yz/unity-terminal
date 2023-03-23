@@ -43,7 +43,9 @@ namespace UnityTerminal
         public virtual void Active(Screen popped, object result = null) { }
         public virtual void UnActive(Screen pushed) { }
         public virtual void Tick(float dt) { }
-        public virtual bool HandleInput() { return false; }
+        // public virtual bool HandleInput() { return false; }
+        public virtual bool KeyDown(KeyCode keyCode, bool shift, bool alt) { return false; }
+        public virtual bool KeyUp(KeyCode keyCode, bool shift, bool alt) { return false; }
         public virtual void Render() { }
         /// Called when the [UserInterface] has been bound to a new terminal with a
         /// different size while this [Screen] is present.

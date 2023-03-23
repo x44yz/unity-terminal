@@ -27,11 +27,11 @@ namespace UnityTerminal
             return dialog;
         }
 
-        public override bool HandleInput()
+        public override bool KeyDown(KeyCode keyCode, bool shift, bool alt)
         {
-            base.HandleInput();
+            // base.HandleInput();
 
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (keyCode == KeyCode.Space)
                 terminal.Pop(this);
 
             return false;

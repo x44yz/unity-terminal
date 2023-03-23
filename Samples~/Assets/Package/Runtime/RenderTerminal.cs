@@ -58,12 +58,6 @@ namespace UnityTerminal
                 screens[i].Tick(dt);
             }
 
-            // Check input
-            if (screens.Count > 0)
-            {
-                screens[screens.Count - 1].HandleInput();
-            }
-
             if (dirty) 
                 _Render();
         }
@@ -97,5 +91,31 @@ namespace UnityTerminal
         //         return false;
         //     return screens[screens.Count - 1] == screen;
         // }
+
+        public void KeyDown(KeyCode keyCode)
+        {
+            if (keyCode == KeyCode.None)
+                return;
+
+            if (screens.Count > 0)
+            {
+                bool shift = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
+                bool alt = Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt);
+                screens[screens.Count - 1].KeyDown(keyCode, shift, alt);
+            }
+        }
+
+        public void KeyUp(KeyCode keyCode)
+        {
+             if (keyCode == KeyCode.None)
+                return;
+
+            if (screens.Count > 0)
+            {
+                bool shift = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
+                bool alt = Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt);
+                screens[screens.Count - 1].KeyUp(keyCode, shift, alt);
+            }
+        }
     }
 }

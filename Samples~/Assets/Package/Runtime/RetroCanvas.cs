@@ -14,6 +14,7 @@ namespace UnityTerminal
         public Sprite glyphBackSpr;
         public bool showGlyphGrid;
         public Color glyphGridColor = Color.red;
+        public bool logKeyEvent;
 
         [Header("RUNTIME")]
         public RetroTerminal terminal;
@@ -102,6 +103,31 @@ namespace UnityTerminal
             }
             gr.SetForeSprite(foreSpr, foreColor);
             gr.SetBackSprite(glyphBackSpr, backColor);
+        }
+
+        private void OnGUI() 
+        {
+            if (terminal == null)
+                return;
+
+            if (Event.current.type == EventType.KeyDown)
+            {
+                if (Input.GetKeyDown(Event.current.keyCode))
+                {
+                    terminal.KeyDown(Event.current.keyCode);
+                    if (logKeyEvent)
+                        Debug.Log($"[input]key down > {Event.current.keyCode}");
+                }
+            }
+            else if (Event.current.type == EventType.KeyUp)
+            {
+                if (Input.GetKeyUp(Event.current.keyCode))
+                {
+                    terminal.KeyUp(Event.current.keyCode);
+                    if (logKeyEvent)
+                        Debug.Log($"[input]key up > {Event.current.keyCode}");
+                }
+            }
         }
 
 #if UNITY_EDITOR

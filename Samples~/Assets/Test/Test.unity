@@ -154,17 +154,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   width: 32
   height: 13
-  offX: 0
-  offY: 0
-  init: 0
   retroCanvas: {fileID: 1664558116}
-  swidth: 1920
-  sheight: 1080
-  showDisplay: 1
-  displayColor: {r: 0.9622642, g: 0.18761116, b: 0.18761116, a: 1}
-  pixelToUnits: 100
-  gizmoPos: 0
-  gscale: 9.23
 --- !u!4 &130101203
 Transform:
   m_ObjectHideFlags: 0
@@ -197,6 +187,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4948264291383720643, guid: b4b07d9979f5d884ea33631d8f5aa682, type: 3}
+      propertyPath: logKeyEvent
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4948264291383720643, guid: b4b07d9979f5d884ea33631d8f5aa682, type: 3}
       propertyPath: showGlyphGrid
       value: 1

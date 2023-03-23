@@ -64,6 +64,10 @@ namespace UnityTerminal
                                 Color? fore = null, Color? back = null) {}
         public virtual void WriteAt(Panel rt, int x, int y, int charCode, 
                                 Color? fore = null, Color? back = null) {}
+        public void WriteAt(int x, int y, Glyph glyph)
+        {
+            WriteAt(x, y, glyph.ch, glyph.fore, glyph.back);
+        }
     }
 }
 
