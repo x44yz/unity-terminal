@@ -240,7 +240,7 @@ namespace UnityTerminal
         public override void WriteAt(int x, int y, string text, 
                                 Color? fore = null, Color? back = null)
         {
-            if (CheckBounds(x, y, true) == false)
+            if (CheckBounds(x, y) == false)
                 return;
 
             for (var i = 0; i < text.Length; i++)
@@ -253,7 +253,7 @@ namespace UnityTerminal
         public override void WriteAt(int x, int y, int charCode, 
                                 Color? fore = null, Color? back = null)
         {
-            if (CheckBounds(x, y, true) == false)
+            if (CheckBounds(x, y) == false)
                 return;
 
             fore ??= foreColor;
