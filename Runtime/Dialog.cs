@@ -37,9 +37,9 @@ namespace UnityTerminal
             return false;
         }
 
-        public override void Render()
+        public override void Render(Terminal terminal)
         {
-            base.Render();
+            base.Render(terminal);
 
             terminal.Fill(sx, sy, terminal.width - sx * 2, terminal.height - sy * 2);
             TerminalUtils.DrawBox(terminal, sx, sy, boxColor);

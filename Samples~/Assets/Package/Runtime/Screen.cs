@@ -46,7 +46,7 @@ namespace UnityTerminal
         // public virtual bool HandleInput() { return false; }
         public virtual bool KeyDown(KeyCode keyCode, bool shift, bool alt) { return false; }
         public virtual bool KeyUp(KeyCode keyCode, bool shift, bool alt) { return false; }
-        public virtual void Render() { }
+        public virtual void Render(Terminal terminal) { }
         /// Called when the [UserInterface] has been bound to a new terminal with a
         /// different size while this [Screen] is present.
         public virtual void Resize(int width, int height) { }

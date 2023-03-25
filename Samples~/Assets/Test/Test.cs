@@ -82,7 +82,7 @@ class MainScreen : Screen {
       return false;
     }
 
-  public override void Render() {
+  public override void Render(Terminal terminal) {
     // TerminalUtils.DrawBox(terminal, 2, 1, TerminalColor.green);
 
     terminal.WriteAt(x, 2, "P", TerminalColor.lightGold, TerminalColor.blue);

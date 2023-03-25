@@ -79,7 +79,7 @@ namespace UnityTerminal
             // Render the top opaque screen and any transparent ones above it.
             for (; i < screens.Count; i++)
             {
-                screens[i].Render();
+                screens[i].Render(this);
             }
 
             dirty = false;
