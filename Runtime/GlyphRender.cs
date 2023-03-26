@@ -9,6 +9,9 @@ namespace UnityTerminal
         [Header("RUNTIME")]
         public SpriteRenderer backSpr;
         public SpriteRenderer foreSpr;
+#if UNITY_EDITOR
+        public Glyph glyph;
+#endif
 
         public static GlyphRender Create(Transform parent)
         {

@@ -59,6 +59,12 @@ namespace UnityTerminal
                         // _display.setGlyph(x, y, glyph);
                         this.Set(x, y, foreSpr, glyph.fore, glyph.back);
                     }
+
+#if UNITY_EDITOR
+                    var gRender = glyphRenders.Get(x, y);
+                    if (gRender != null && gRender.glyph != glyph)
+                        gRender.glyph = glyph;
+#endif
                 }
             }
         }
@@ -88,21 +94,21 @@ namespace UnityTerminal
                 return;
             }
 
-            var gr = glyphRenders.Get(x, y);
-            if (gr == null)
+            var gRender = glyphRenders.Get(x, y);
+            if (gRender == null)
             {
-                gr = GlyphRender.Create(glyphsRoot);
-                gr.name = $"SPR_{x}_{y}";
-                glyphRenders.Set(x, y, gr);
+                gRender = GlyphRender.Create(glyphsRoot);
+                gRender.name = $"GLYPH_{x}_{y}";
+                glyphRenders.Set(x, y, gRender);
 
-                gr.transform.localPosition = new Vector3(
+                gRender.transform.localPosition = new Vector3(
                     (x - terminal.width * 0.5f + 0.5f) * rt.charWidth * rt.scale / pixelToUnits, 
                     (rt.height * 0.5f - y - 0.5f) * rt.charHeight * rt.scale / pixelToUnits, 
                     0f);
-                gr.transform.localScale = Vector3.one * rt.scale;
+                gRender.transform.localScale = Vector3.one * rt.scale;
             }
-            gr.SetForeSprite(foreSpr, foreColor);
-            gr.SetBackSprite(glyphBackSpr, backColor);
+            gRender.SetForeSprite(foreSpr, foreColor);
+            gRender.SetBackSprite(glyphBackSpr, backColor);
         }
 
         private void OnGUI() 

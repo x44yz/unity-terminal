@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.12731713, g: 0.13414736, b: 0.12107852, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731715, g: 0.13414735, b: 0.121078536, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -192,6 +192,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4948264291383720643, guid: b4b07d9979f5d884ea33631d8f5aa682, type: 3}
+      propertyPath: glyphBgsRoot
+      value: 
+      objectReference: {fileID: 8750866487265576193}
+    - target: {fileID: 4948264291383720643, guid: b4b07d9979f5d884ea33631d8f5aa682, type: 3}
       propertyPath: showGlyphGrid
       value: 1
       objectReference: {fileID: 0}
@@ -245,3 +249,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b4b07d9979f5d884ea33631d8f5aa682, type: 3}
+--- !u!4 &8750866487265576193 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8921888649485112545, guid: b4b07d9979f5d884ea33631d8f5aa682, type: 3}
+  m_PrefabInstance: {fileID: 8750866487265576192}
+  m_PrefabAsset: {fileID: 0}

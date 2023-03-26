@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
 namespace UnityTerminal
 {
+    [Serializable]
     public class Color 
     {
         public static Color black = new Color(0, 0, 0);
@@ -97,7 +99,7 @@ namespace UnityTerminal
             return hashCode;
         }
 
-        Color add(Color other, float fractionOther = 1.0f) {
+        public Color add(Color other, float fractionOther = 1.0f) {
             return new Color(
                 (int)UnityEngine.Mathf.Clamp(r + other.r * fractionOther, 0, 255),
                 (int)UnityEngine.Mathf.Clamp(g + other.g * fractionOther, 0, 255),
@@ -105,14 +107,14 @@ namespace UnityTerminal
         }
 
         public Color blend(Color other, double fractionOther) {
-            var fractionThis = 1.0 - fractionOther;
+            var fractionThis = 1.0f - fractionOther;
             return new Color(
                 (int)(r * fractionThis + other.r * fractionOther),
                 (int)(g * fractionThis + other.g * fractionOther),
                 (int)(b * fractionThis + other.b * fractionOther));
         }
 
-        Color blendPercent(Color other, int percentOther) =>
-            blend(other, percentOther / 100);
+        public Color blendPercent(Color other, int percentOther) =>
+            blend(other, percentOther / 100f);
     }
 }

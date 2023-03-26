@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace UnityTerminal
 {
+    [Serializable]
     public class Glyph
     {
         public int ch;
