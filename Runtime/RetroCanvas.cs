@@ -13,7 +13,7 @@ namespace UnityTerminal
         public float pixelToUnits = 100; // default
         public Sprite glyphBackSpr;
         public bool showGlyphGrid;
-        public Color glyphGridColor = Color.red;
+        public UnityEngine.Color glyphGridColor = UnityEngine.Color.red;
         public bool logKeyEvent;
 
         [Header("RUNTIME")]

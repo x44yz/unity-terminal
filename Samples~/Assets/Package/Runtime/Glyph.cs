@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace UnityTerminal
 {
@@ -31,8 +30,8 @@ namespace UnityTerminal
         public bool isEqual(int ch, Color? fore, Color? back)
         {
             return this.ch == ch && 
-                this.fore == fore &&
-                this.back == back;
+                this.fore.Equals(fore) &&
+                this.back.Equals(back);
         }
 
         public bool isEqual(Glyph other)

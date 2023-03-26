@@ -37,7 +37,7 @@ namespace UnityTerminal
                 backSpr.sortingOrder = -1;
                 backSpr.sprite = s;
             }
-            if (color == null || color.Value == Color.black)
+            if (color == null || color == Color.black)
             {
                 backSpr.enabled = false;
                 return;
@@ -68,9 +68,9 @@ namespace UnityTerminal
                 return;
 
             if (color == null)
-                spr.color = Color.white;
+                spr.color = Color.white.ToUnityColor();
             else
-                spr.color = color.Value;
+                spr.color = color.ToUnityColor();
         }
     }
 }

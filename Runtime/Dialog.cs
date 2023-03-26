@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using KeyCode = UnityEngine.KeyCode;
 
 namespace UnityTerminal
 {
@@ -8,7 +8,7 @@ namespace UnityTerminal
     {
         public string title;
         public string message;
-        public Color boxColor = TerminalColor.green;
+        public Color boxColor = Color.green;
         public int sx = 2; // s - start
         public int sy = 1;
         public int titlePaddingX = 0;

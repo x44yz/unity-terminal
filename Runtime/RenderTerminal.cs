@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using Input = UnityEngine.Input;
+using KeyCode = UnityEngine.KeyCode;
 
 namespace UnityTerminal
 {

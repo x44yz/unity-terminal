@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityTerminal;
 using Screen = UnityTerminal.Screen;
-
+using Color = UnityTerminal.Color;
 
 class MainScreen : Screen {
   // public List<Ball> balls = new List<Ball>();
@@ -11,13 +11,13 @@ class MainScreen : Screen {
   public MainScreen() {
     var colors = new List<Color>{
       Color.red,
-      TerminalColor.orange,
-      TerminalColor.gold,
+      Color.orange,
+      Color.gold,
       Color.yellow,
       Color.green,
-      TerminalColor.aqua,
+      Color.aqua,
       Color.blue,
-      TerminalColor.purple
+      Color.purple
     };
 
     // foreach (var _char in "0123456789") {
@@ -85,8 +85,8 @@ class MainScreen : Screen {
   public override void Render(Terminal terminal) {
     // TerminalUtils.DrawBox(terminal, 2, 1, TerminalColor.green);
 
-    terminal.WriteAt(x, 2, "P", TerminalColor.lightGold, TerminalColor.blue);
-    terminal.WriteAt(0, 1, "å", TerminalColor.white, TerminalColor.blue);
+    terminal.WriteAt(x, 2, "P", Color.lightGold, Color.blue);
+    terminal.WriteAt(0, 1, "å", Color.white, Color.blue);
 
     var t = terminal.Rect(7, 4, 10, 10);
     t.WriteAt(0, 0, "1");
