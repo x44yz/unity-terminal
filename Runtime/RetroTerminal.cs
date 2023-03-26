@@ -207,17 +207,17 @@ namespace UnityTerminal
                 9, 16, displayWidthPixels, displayHeightPixels, canvas, CharCode.space, Color.white);
         }
 
-        public static RetroTerminal ShortDos(int width, int height, 
+        public static RetroTerminal ShortDos(int width, int height,
                 int displayWidthPixels, int displayHeightPixels, RetroCanvas canvas)
         {
             return new RetroTerminal("dos-short", width, height,
                 9, 13, displayWidthPixels, displayHeightPixels, canvas, CharCode.space, Color.white);
         }
 
-        RetroTerminal(string resName, int width, int height, 
+        RetroTerminal(string resName, int width, int height,
             int charWidth, int charHeight,
             int displayWidthPixels, int displayHeightPixels,
-            RetroCanvas canvas, 
+            RetroCanvas canvas,
             int clearCode, Color foreColor)
         {
             this.width = width;
@@ -227,17 +227,17 @@ namespace UnityTerminal
 
             this.charWidth = charWidth;
             this.charHeight = charHeight;
-            this.scale = Mathf.Min(displayHeightPixels * 1f / height / charHeight, 
+            this.scale = Mathf.Min(displayHeightPixels * 1f / height / charHeight,
                             displayWidthPixels * 1f / width / charWidth);
 
             this.canvas = canvas;
             this.canvas.Init(this, resName, Code2SpriteIdx);
 
             glyphs = new Array2D<Glyph>(width, height, null);
-            glyphs.Fill(()=>{ return new Glyph(clearCode, foreColor); });
+            glyphs.Fill(() => { return new Glyph(clearCode, foreColor); });
         }
 
-        public override void WriteAt(int x, int y, string text, 
+        public override void WriteAt(int x, int y, string text,
                                 Color? fore = null, Color? back = null)
         {
             if (CheckBounds(x, y) == false)
@@ -250,7 +250,7 @@ namespace UnityTerminal
             }
         }
 
-        public override void WriteAt(int x, int y, int charCode, 
+        public override void WriteAt(int x, int y, int charCode,
                                 Color? fore = null, Color? back = null)
         {
             if (CheckBounds(x, y) == false)
@@ -316,7 +316,7 @@ namespace UnityTerminal
         //     for (var y = 0; y < height; y++) {
         //         for (var x = 0; x < width; x++) {
         //             var glyph = glyphs.Get(x, y);
-                    
+
 
         //             // Only draw glyphs that are different since the last call.
         //             // if (glyph == null) continue;

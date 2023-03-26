@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace UnityTerminal
 {
     [Serializable]
-    public class Color 
+    public struct Color
     {
         public static Color black = new Color(0, 0, 0);
         public static Color white = new Color(255, 255, 255);
@@ -60,36 +60,39 @@ namespace UnityTerminal
 
         public UnityEngine.Color ToUnityColor() => new UnityEngine.Color(r / 255f, g / 255f, b / 255f, 1f);
 
-            public Color(int r, int g, int b)
-            {
-                this.r = r;
-                this.g = g;
-                this.b = b;
-            }
+        public Color(int r, int g, int b)
+        {
+            this.r = r;
+            this.g = g;
+            this.b = b;
+        }
 
         public int hashCode => r.GetHashCode() ^ g.GetHashCode() ^ b.GetHashCode();
 
-        public static bool operator ==(Color a, object other) {
-            if (a is null && other is null) return true;
-            if (a is null) return false;
-            if (other is null) return false;
+        public static bool operator ==(Color a, Color b)
+        {
+            // if (a is null && other is null) return true;
+            // if (a is null) return false;
+            // if (other is null) return false;
 
-            if (other is Color) {
-                var b = other as Color;
+            // if (other is Color)
+            // {
+            //     var b = other as Color;
             return a.r == b.r && a.g == b.g && a.b == b.b;
-            }
-            return false;
+            // }
+            // return false;
         }
 
-        public static bool operator !=(Color a, object other) {
-            return !(a == other);
+        public static bool operator !=(Color a, Color b)
+        {
+            return !(a == b);
         }
 
         public override bool Equals(object obj)
         {
             if (obj is Color)
             {
-                var k = obj as Color;
+                var k = (Color)obj;
                 return this == k;
             }
             return false;
@@ -99,14 +102,16 @@ namespace UnityTerminal
             return hashCode;
         }
 
-        public Color add(Color other, float fractionOther = 1.0f) {
+        public Color add(Color other, float fractionOther = 1.0f)
+        {
             return new Color(
                 (int)UnityEngine.Mathf.Clamp(r + other.r * fractionOther, 0, 255),
                 (int)UnityEngine.Mathf.Clamp(g + other.g * fractionOther, 0, 255),
                 (int)UnityEngine.Mathf.Clamp(b + other.b * fractionOther, 0, 255));
         }
 
-        public Color blend(Color other, double fractionOther) {
+        public Color blend(Color other, double fractionOther)
+        {
             var fractionThis = 1.0f - fractionOther;
             return new Color(
                 (int)(r * fractionThis + other.r * fractionOther),

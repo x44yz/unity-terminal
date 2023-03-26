@@ -43,60 +43,11 @@ namespace UnityTerminal
         public virtual void Active(Screen popped, object result = null) { }
         public virtual void UnActive(Screen pushed) { }
         public virtual void Tick(float dt) { }
-        // public virtual bool HandleInput() { return false; }
         public virtual bool KeyDown(KeyCode keyCode, bool shift, bool alt) { return false; }
         public virtual bool KeyUp(KeyCode keyCode, bool shift, bool alt) { return false; }
         public virtual void Render(Terminal terminal) { }
         /// Called when the [UserInterface] has been bound to a new terminal with a
         /// different size while this [Screen] is present.
         public virtual void Resize(int width, int height) { }
-
-        // public virtual void WriteAt(int x, int y, string text, 
-        //                         Color? fore = null, Color? back = null) 
-        // {
-        //     if (terminal == null)
-        //         return;
-        //     terminal.WriteAt(x, y, text, fore, back);
-        // }
-        // public virtual void WriteAt(int x, int y, int charCode, 
-        //                         Color? fore = null, Color? back = null)
-        // {
-        //     if (terminal == null)
-        //         return;
-        //     terminal.WriteAt(x, y, charCode, fore, back);
-        // }
-
-        // Dictionary<string, Panel> panels;
-        // public Panel GetPanel(string name)
-        // {
-        //     if (panels == null)
-        //         return null;
-
-        //     Panel p = null;
-        //     panels.TryGetValue(name, out p);
-        //     return p;
-        // }
-
-        // public Panel AddPanel(int x, int y, int w, int h)
-        // {
-        //     string name = $"{x}_{y}_{w}_{h}";
-        //     return AddPanel(name, x, y, w ,h);
-        // }
-        
-        // public Panel AddPanel(string name, int x, int y, int w, int h)
-        // {
-        //     Panel p = GetPanel(name);
-        //     if (p != null)
-        //         return p;
-
-        //     // lazy init
-        //     if (panels == null)
-        //         panels = new Dictionary<string, Panel>();
-            
-        //     p = new Panel();
-        //     p.Init(this, x, y, w, h);
-        //     panels[name] = p;
-        //     return p;
-        // }
     }
 }

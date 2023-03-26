@@ -53,7 +53,7 @@ namespace UnityTerminal
     //     public static Color lightBrown = Rgba255(190, 150, 100);
     //     public static Color brown = Rgba255(160, 110, 60);
     //     public static Color darkBrown = Rgba255(100, 64, 32);
-    
+
     //     public static Color darkCoolGray = Rgba255(0x26, 0x2a, 0x42);
 
     //     public static Color lightWarmGray = Rgba255(0x84, 0x7e, 0x87);
@@ -67,10 +67,10 @@ namespace UnityTerminal
             DrawBox(terminal, x, y, terminal.width - x * 2, terminal.height - y * 2, color);
         }
 
-        public static void DrawBox(Terminal terminal, int x, int y, 
+        public static void DrawBox(Terminal terminal, int x, int y,
             int width, int height, Color? color = null)
         {
-            DrawBox(terminal, x, y, width, height, color, 
+            DrawBox(terminal, x, y, width, height, color,
                 "┌", "─", "┐", "│", "└", "─", "┘");
         }
 
@@ -85,17 +85,17 @@ namespace UnityTerminal
         //     DrawBox(terminal, p.x + x, p.y + y, width, height, color);
         // }
 
-        public static void DrawFrame(Terminal terminal, int x, int y, 
+        public static void DrawFrame(Terminal terminal, int x, int y,
             Color? color = null)
         {
-            DrawFrame(terminal, x, y, terminal.width - x * 2, 
+            DrawFrame(terminal, x, y, terminal.width - x * 2,
                     terminal.height - y * 2, color);
         }
 
-        public static void DrawFrame(Terminal terminal, int x, int y, 
+        public static void DrawFrame(Terminal terminal, int x, int y,
             int width, int height, Color? color = null)
         {
-            DrawBox(terminal, x, y, width, height, color, 
+            DrawBox(terminal, x, y, width, height, color,
                 "╒", "═", "╕", "│", "└", "─", "┘");
         }
 
@@ -153,7 +153,7 @@ namespace UnityTerminal
             }
         }
 
-        public static void DrawHelpKeys(Terminal terminal, 
+        public static void DrawHelpKeys(Terminal terminal,
                 Dictionary<string, string> helpKeys,
                 string query = null, Color? queryBoxColor = null,
                 Color? queryTextColor = null, Color? keyColor = null,
@@ -167,7 +167,8 @@ namespace UnityTerminal
 
             // Draw the help.
             var helpTextLength = 0;
-            foreach (var kv in helpKeys) {
+            foreach (var kv in helpKeys)
+            {
                 var key = kv.Key;
                 var text = kv.Value;
                 if (helpTextLength > 0)
@@ -178,22 +179,27 @@ namespace UnityTerminal
             var x = (terminal.width - helpTextLength) / 2;
 
             // Show the query string, if there is one.
-            if (query != null) {
+            if (query != null)
+            {
                 DrawBox(terminal, x - 2, terminal.height - 4, helpTextLength + 4, 5,
                     queryBoxColor);
                 terminal.WriteAt((terminal.width - query.Length) / 2,
                     terminal.height - 3, query, queryTextColor);
-                } else {
+            }
+            else
+            {
                 DrawBox(terminal, x - 2, terminal.height - 2, helpTextLength + 4, 3,
                     queryBoxColor);
             }
 
             var first = true;
-            foreach (var kv in helpKeys) {
+            foreach (var kv in helpKeys)
+            {
                 var key = kv.Key;
                 var text = kv.Value;
 
-                if (!first) {
+                if (!first)
+                {
                     terminal.WriteAt(x, terminal.height - 1, ", ", symbolColor);
                     x += 2;
                 }

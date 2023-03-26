@@ -9,12 +9,12 @@ namespace UnityTerminal
         public int height;
         public List<T> elements;
 
-#region IEnumerable
+        #region IEnumerable
         public IEnumerator GetEnumerator()
         {
             return elements.GetEnumerator();
         }
-#endregion // IEnumerable
+        #endregion // IEnumerable
 
         public Array2D(int width, int height, T value)
         {
@@ -53,7 +53,7 @@ namespace UnityTerminal
         {
             if (x < 0 || x >= width)
                 throw new System.Exception($"x={x} was out of range");
-            if (y < 0 || y >= height) 
+            if (y < 0 || y >= height)
                 throw new System.Exception($"y={y} was out of range");
         }
     }

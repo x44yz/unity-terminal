@@ -73,7 +73,7 @@ namespace UnityTerminal
             if (color == null)
                 spr.color = Color.white.ToUnityColor();
             else
-                spr.color = color.ToUnityColor();
+                spr.color = color.Value.ToUnityColor();
         }
     }
 }

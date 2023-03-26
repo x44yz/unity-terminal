@@ -30,7 +30,7 @@ namespace UnityTerminal
 
         public bool isEqual(int ch, Color? fore, Color? back)
         {
-            return this.ch == ch && 
+            return this.ch == ch &&
                 this.fore.Equals(fore) &&
                 this.back.Equals(back);
         }

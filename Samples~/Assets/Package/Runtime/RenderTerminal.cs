@@ -59,7 +59,7 @@ namespace UnityTerminal
                 screens[i].Tick(dt);
             }
 
-            if (dirty) 
+            if (dirty)
                 _Render();
         }
 
@@ -108,7 +108,7 @@ namespace UnityTerminal
 
         public void KeyUp(KeyCode keyCode)
         {
-             if (keyCode == KeyCode.None)
+            if (keyCode == KeyCode.None)
                 return;
 
             if (screens.Count > 0)

@@ -9,16 +9,11 @@ namespace UnityTerminal
         public int width;
         public int height;
         public Color backColor = Color.black;
-    
+
         public virtual void Clear()
         {
             Fill(0, 0, width, height);
         }
-
-        // public virtual void Clear(Panel p)
-        // {
-        //     Clear(p.x, p.y, p.w, p.h);
-        // }
 
         public virtual void Clear(int x, int y, int w, int h)
         {
@@ -29,10 +24,12 @@ namespace UnityTerminal
         {
             color ??= backColor;
 
-            for (var py = y; py < y + height; py++) {
-              for (var px = x; px < x + width; px++) {
-                WriteAt(px, py, CharCode.space);
-              }
+            for (var py = y; py < y + height; py++)
+            {
+                for (var px = x; px < x + width; px++)
+                {
+                    WriteAt(px, py, CharCode.space);
+                }
             }
         }
 
@@ -48,7 +45,7 @@ namespace UnityTerminal
             return true;
         }
 
-        public virtual void Tick(float dt) {}
+        public virtual void Tick(float dt) { }
 
         public virtual Terminal Rect(int x, int y, int w, int h)
         {
@@ -56,14 +53,12 @@ namespace UnityTerminal
         }
 
         // RetorTerminal
-        public virtual void WriteAt(int x, int y, string text, 
-                                Color? fore = null, Color? back = null) {}
-        public virtual void WriteAt(int x, int y, int charCode, 
-                                Color? fore = null, Color? back = null) {}
-        // public virtual void WriteAt(Panel rt, int x, int y, string text, 
-        //                         Color? fore = null, Color? back = null) {}
-        // public virtual void WriteAt(Panel rt, int x, int y, int charCode, 
-        //                         Color? fore = null, Color? back = null) {}
+        public virtual void WriteAt(int x, int y, string text,
+                                Color? fore = null, Color? back = null)
+        { }
+        public virtual void WriteAt(int x, int y, int charCode,
+                                Color? fore = null, Color? back = null)
+        { }
         public void WriteAt(int x, int y, Glyph glyph)
         {
             WriteAt(x, y, glyph.ch, glyph.fore, glyph.back);

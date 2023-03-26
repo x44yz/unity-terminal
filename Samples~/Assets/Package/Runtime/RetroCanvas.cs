@@ -40,13 +40,15 @@ namespace UnityTerminal
 
         public override void Render()
         {
-           if (terminal == null)
+            if (terminal == null)
                 return;
 
-            for (var x = 0; x < terminal.width; x++) {
-                for (var y = 0; y < terminal.height; y++) {
+            for (var x = 0; x < terminal.width; x++)
+            {
+                for (var y = 0; y < terminal.height; y++)
+                {
                     var glyph = terminal.glyphs.Get(x, y);
-                
+
                     if (glyph == null /*|| glyph.ch == CharCode.space*/)
                     {
                         this.Set(x, y, null, Color.white, null);
@@ -55,7 +57,7 @@ namespace UnityTerminal
                     {
                         // Debug.Log($"xx-- render > {x}, {y}, {glyph.ch}");
                         var foreSpr = GetSprite(glyph.ch);
-    
+
                         // _display.setGlyph(x, y, glyph);
                         this.Set(x, y, foreSpr, glyph.fore, glyph.back);
                     }
@@ -102,8 +104,8 @@ namespace UnityTerminal
                 glyphRenders.Set(x, y, gRender);
 
                 gRender.transform.localPosition = new Vector3(
-                    (x - terminal.width * 0.5f + 0.5f) * rt.charWidth * rt.scale / pixelToUnits, 
-                    (rt.height * 0.5f - y - 0.5f) * rt.charHeight * rt.scale / pixelToUnits, 
+                    (x - terminal.width * 0.5f + 0.5f) * rt.charWidth * rt.scale / pixelToUnits,
+                    (rt.height * 0.5f - y - 0.5f) * rt.charHeight * rt.scale / pixelToUnits,
                     0f);
                 gRender.transform.localScale = Vector3.one * rt.scale;
             }
@@ -111,7 +113,7 @@ namespace UnityTerminal
             gRender.SetBackSprite(glyphBackSpr, backColor);
         }
 
-        private void OnGUI() 
+        private void OnGUI()
         {
             if (terminal == null)
                 return;
@@ -148,22 +150,22 @@ namespace UnityTerminal
             float charWidth = terminal.charWidth * terminal.scale;
             float charHeight = terminal.charHeight * terminal.scale;
 
-            var fx =  -terminal.width * charWidth * 0.5f;
+            var fx = -terminal.width * charWidth * 0.5f;
             var fy = terminal.height * charHeight * 0.5f;
             var off = new Vector3(fx / pixelToUnits, fy / pixelToUnits, 0f);
 
             Gizmos.color = glyphGridColor;
             for (int i = 0; i <= terminal.width; ++i)
             {
-                Vector3 bpos = glyphsRoot.position + off + new Vector3(i * charWidth/pixelToUnits, 0 * charHeight/pixelToUnits, -1);
-                Vector3 epos = glyphsRoot.position + off + new Vector3(i * charWidth/pixelToUnits, -terminal.height * charHeight/pixelToUnits, -1);
+                Vector3 bpos = glyphsRoot.position + off + new Vector3(i * charWidth / pixelToUnits, 0 * charHeight / pixelToUnits, -1);
+                Vector3 epos = glyphsRoot.position + off + new Vector3(i * charWidth / pixelToUnits, -terminal.height * charHeight / pixelToUnits, -1);
                 Gizmos.DrawLine(bpos, epos);
             }
 
             for (int j = 0; j <= terminal.height; ++j)
             {
-                Vector3 bpos = glyphsRoot.position + off + new Vector3(0 * charWidth/pixelToUnits, -j * charHeight/pixelToUnits, -1);
-                Vector3 epos = glyphsRoot.position + off + new Vector3(terminal.width * charWidth/pixelToUnits, -j * charHeight/pixelToUnits, -1);
+                Vector3 bpos = glyphsRoot.position + off + new Vector3(0 * charWidth / pixelToUnits, -j * charHeight / pixelToUnits, -1);
+                Vector3 epos = glyphsRoot.position + off + new Vector3(terminal.width * charWidth / pixelToUnits, -j * charHeight / pixelToUnits, -1);
                 Gizmos.DrawLine(bpos, epos);
             }
         }
