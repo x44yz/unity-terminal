@@ -28,18 +28,18 @@ namespace UnityTerminal
             this.back = back ?? Color.black;
         }
 
-        public bool isEqual(int ch, Color? fore, Color? back)
+        public bool IsEqual(int ch, Color? fore, Color? back)
         {
             return this.ch == ch &&
                 this.fore.Equals(fore) &&
                 this.back.Equals(back);
         }
 
-        public bool isEqual(Glyph other)
+        public bool IsEqual(Glyph other)
         {
             if (other == null)
                 return false;
-            return isEqual(other.ch, other.fore, other.back);
+            return IsEqual(other.ch, other.fore, other.back);
         }
     }
 }

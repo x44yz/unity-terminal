@@ -260,80 +260,23 @@ namespace UnityTerminal
             DrawGlyph(x, y, charCode, fore, back);
         }
 
-        // public override void WriteAt(Panel rt, int x, int y, string text, 
-        //                         Color? fore = null, Color? back = null) 
-        // {
-        //     if (rt.y + y >= rt.y + rt.h)
-        //         return;
-
-        //     for (var i = 0; i < text.Length; i++)
-        //     {
-        //         if (rt.x + x + i >= width ||
-        //             rt.x + x + i >= rt.x + rt.w) break;
-        //         WriteAt(rt.x + x + i, rt.y + y, text[i], fore, back);
-        //     }
-        // }
-        // public override void WriteAt(Panel rt, int x, int y, int charCode, 
-        //                         Color? fore = null, Color? back = null)
-        // {
-        //     if (rt.x + x >= rt.x + rt.w ||
-        //         rt.y + y >= rt.y + rt.h)
-        //         return;
-        //     WriteAt(rt.x + x, rt.y + y, charCode, fore, back);
-        // }
-
-        public void clearGlyph(int x, int y)
-        {
-            if (CheckBounds(x, y) == false)
-                return;
-
-            glyphs.Get(x, y).ch = clearCode;
-        }
-
         public void DrawGlyph(int x, int y, int chr, Color? fore = null, Color? back = null)
         {
             if (CheckBounds(x, y) == false)
                 return;
 
             var gh = glyphs.Get(x, y);
-            if (gh != null && gh.isEqual(chr, fore, back) == false)
+            if (gh != null && gh.IsEqual(chr, fore, back) == false)
             {
-                // Debug.Log($"xx-- set 1 > {x}, {y} " + glyph._char);
                 gh.Set(chr, fore, back);
-                // Debug.Log($"xx-- set > {x},{y},{chr}");
             }
         }
 
-        protected override void _Render()
+        protected override void Render()
         {
-            base._Render();
+            base.Render();
 
             canvas.Render();
         }
-
-        // public void render(Action<int, int, Glyph> renderGlyph)
-        // {
-        //     for (var y = 0; y < height; y++) {
-        //         for (var x = 0; x < width; x++) {
-        //             var glyph = glyphs.Get(x, y);
-
-
-        //             // Only draw glyphs that are different since the last call.
-        //             // if (glyph == null) continue;
-        //             // if (glyph.dirty == false) continue;
-
-        //             renderGlyph(x, y, glyph);
-
-        //             // It's up to date now.
-        //             // _glyphs.Get(x, y)._char = glyph._char;
-        //             // _glyphs.Get(x, y).fore = glyph.fore;
-        //             // _changedGlyphs.Get(x, y)._char = Glyph.clear._char;
-        //             // _changedGlyphs.Get(x, y).dirty = false;
-        //             // _glyphs.Set(x, y, glyph);
-        //             // _changedGlyphs.Set(x, y, null);
-        //             // if (x == 0 && y == 1) Debug.Log("xx-- set 3 > null ");
-        //         }
-        //     }
-        // }
     }
 }

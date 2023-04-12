@@ -1,6 +1,5 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
+using Mathf = UnityEngine.Mathf;
 
 namespace UnityTerminal
 {
@@ -67,20 +66,9 @@ namespace UnityTerminal
             this.b = b;
         }
 
-        public int hashCode => r.GetHashCode() ^ g.GetHashCode() ^ b.GetHashCode();
-
         public static bool operator ==(Color a, Color b)
         {
-            // if (a is null && other is null) return true;
-            // if (a is null) return false;
-            // if (other is null) return false;
-
-            // if (other is Color)
-            // {
-            //     var b = other as Color;
             return a.r == b.r && a.g == b.g && a.b == b.b;
-            // }
-            // return false;
         }
 
         public static bool operator !=(Color a, Color b)
@@ -97,20 +85,21 @@ namespace UnityTerminal
             }
             return false;
         }
+
         public override int GetHashCode()
         {
-            return hashCode;
+            return r.GetHashCode() ^ g.GetHashCode() ^ b.GetHashCode();
         }
 
-        public Color add(Color other, float fractionOther = 1.0f)
+        public Color Add(Color other, float fractionOther = 1.0f)
         {
             return new Color(
-                (int)UnityEngine.Mathf.Clamp(r + other.r * fractionOther, 0, 255),
-                (int)UnityEngine.Mathf.Clamp(g + other.g * fractionOther, 0, 255),
-                (int)UnityEngine.Mathf.Clamp(b + other.b * fractionOther, 0, 255));
+                (int)Mathf.Clamp(r + other.r * fractionOther, 0, 255),
+                (int)Mathf.Clamp(g + other.g * fractionOther, 0, 255),
+                (int)Mathf.Clamp(b + other.b * fractionOther, 0, 255));
         }
 
-        public Color blend(Color other, double fractionOther)
+        public Color Blend(Color other, double fractionOther)
         {
             var fractionThis = 1.0f - fractionOther;
             return new Color(
@@ -119,7 +108,7 @@ namespace UnityTerminal
                 (int)(b * fractionThis + other.b * fractionOther));
         }
 
-        public Color blendPercent(Color other, int percentOther) =>
-            blend(other, percentOther / 100f);
+        public Color BlendPercent(Color other, int percentOther) =>
+            Blend(other, percentOther / 100f);
     }
 }

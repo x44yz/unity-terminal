@@ -39,7 +39,7 @@ namespace UnityTerminal
                 y < 0 || y >= height)
             {
                 if (log)
-                    Debug.LogError($"{{{x}, {y}}} is out of terminal bounds.");
+                    Debug.LogError($"[terminal]({x}, {y}) is out of terminal bounds.");
                 return false;
             }
             return true;

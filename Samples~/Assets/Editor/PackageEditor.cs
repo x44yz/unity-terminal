@@ -18,7 +18,7 @@ public class PackageEditor
     {
         try
         {
-            Debug.Log($"copy folder from {srcFolder} to {destFolder}");
+            Debug.Log($"[PackageEditor]copy folder from {srcFolder} to {destFolder}");
             
             if (!Directory.Exists(destFolder))
                 Directory.CreateDirectory(destFolder);
@@ -44,7 +44,7 @@ public class PackageEditor
         }
         catch (System.Exception ex)
         {
-            Debug.LogError($"failed to copy folder {srcFolder} > {ex.ToString()}");
+            Debug.LogError($"[PackageEditor]failed to copy folder {srcFolder} > {ex.ToString()}");
             return -1;
         }
     }

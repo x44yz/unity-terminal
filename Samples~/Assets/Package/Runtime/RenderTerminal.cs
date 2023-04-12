@@ -21,7 +21,7 @@ namespace UnityTerminal
                 curTopScreen.UnActive(screen);
             }
             screens.Add(screen);
-            _Render();
+            Render();
         }
 
         public void Pop(object result = null)
@@ -30,7 +30,7 @@ namespace UnityTerminal
             screens.RemoveAt(screens.Count - 1);
             screen.Unbind();
             screens[screens.Count - 1].Active(screen, result);
-            _Render();
+            Render();
         }
 
         public void GoTo(Screen screen)
@@ -41,7 +41,7 @@ namespace UnityTerminal
 
             screen.Bind(this);
             screens.Add(screen);
-            _Render();
+            Render();
         }
 
         public void Dirty()
@@ -60,10 +60,10 @@ namespace UnityTerminal
             }
 
             if (dirty)
-                _Render();
+                Render();
         }
 
-        protected virtual void _Render()
+        protected virtual void Render()
         {
             Clear();
 
@@ -85,13 +85,6 @@ namespace UnityTerminal
 
             dirty = false;
         }
-
-        // public bool IsTopScreen(Screen screen)
-        // {
-        //     if (screens == null)
-        //         return false;
-        //     return screens[screens.Count - 1] == screen;
-        // }
 
         public void KeyDown(KeyCode keyCode)
         {

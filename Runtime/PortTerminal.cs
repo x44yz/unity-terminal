@@ -6,15 +6,15 @@ namespace UnityTerminal
     /// A terminal that draws to a window within another parent terminal.
     class PortTerminal : Terminal
     {
-        public int _x;
-        public int _y;
-        public Terminal _root;
+        public int x;
+        public int y;
+        public Terminal parent;
 
-        public PortTerminal(int _x, int _y, int w, int h, Terminal _root)
+        public PortTerminal(int x, int y, int w, int h, Terminal parent)
         {
-            this._x = _x;
-            this._y = _y;
-            this._root = _root;
+            this.x = x;
+            this.y = y;
+            this.parent = parent;
 
             width = w;
             height = h;
@@ -38,14 +38,13 @@ namespace UnityTerminal
             if (y < 0) return;
             if (y >= height) return;
 
-            _root.WriteAt(_x + x, _y + y, charCode, fore, back);
+            parent.WriteAt(this.x + x, this.y + y, charCode, fore, back);
         }
 
         public override Terminal Rect(int x, int y, int width, int height)
         {
-            // TODO: Bounds check.
             // Overridden so we can flatten out nested PortTerminals.
-            return new PortTerminal(_x + x, _y + y, width, height, _root);
+            return new PortTerminal(this.x + x, this.y + y, width, height, parent);
         }
     }
 }

@@ -49,23 +49,22 @@ namespace UnityTerminal
                 {
                     var glyph = terminal.glyphs.Get(x, y);
 
-                    if (glyph == null /*|| glyph.ch == CharCode.space*/)
+                    if (glyph == null)
                     {
                         this.Set(x, y, null, Color.white, null);
                     }
                     else
                     {
-                        // Debug.Log($"xx-- render > {x}, {y}, {glyph.ch}");
                         var foreSpr = GetSprite(glyph.ch);
-
-                        // _display.setGlyph(x, y, glyph);
                         this.Set(x, y, foreSpr, glyph.fore, glyph.back);
                     }
 
 #if UNITY_EDITOR
                     var gRender = glyphRenders.Get(x, y);
                     if (gRender != null && gRender.glyph != glyph)
+                    {
                         gRender.glyph = glyph;
+                    }
 #endif
                 }
             }
@@ -81,7 +80,7 @@ namespace UnityTerminal
 
             if (sprIdx < 0 || sprIdx >= sprites.Length)
             {
-                Debug.LogError("not support glyph > " + ch);
+                Debug.LogError("[canvas]not support glyph > " + ch);
                 return null;
             }
             return sprites[sprIdx];
@@ -92,7 +91,7 @@ namespace UnityTerminal
             var rt = terminal as RetroTerminal;
             if (rt == null)
             {
-                Debug.LogError("only support for RetroTerminal");
+                Debug.LogError("[canvas]only support for RetroTerminal");
                 return;
             }
 

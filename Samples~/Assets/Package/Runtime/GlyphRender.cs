@@ -10,6 +10,7 @@ namespace UnityTerminal
         public SpriteRenderer backSpr;
         public SpriteRenderer foreSpr;
 #if UNITY_EDITOR
+        // for glyph debug
         public Glyph glyph;
 #endif
 
